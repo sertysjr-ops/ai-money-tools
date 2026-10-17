@@ -24,6 +24,16 @@ node tools/quotemine/cli.js essay.txt --count 10
 cat book-chapter.txt | node tools/quotemine/cli.js
 ```
 
+### 💬 replyguy
+
+Draft replies to any social post — multiple tones, optional stance.
+
+```bash
+node tools/replyguy/cli.js tweet.txt --count 4
+pbpaste | node tools/replyguy/cli.js --tone witty --agree
+node tools/replyguy/cli.js post.txt --context "I'm a devtools founder"
+```
+
 ## Setup
 
 ```bash
@@ -46,7 +56,7 @@ Optional env vars:
 
 ## Ideas backlog
 
-- [ ] `replyguy` — generate 5 reply variants to any post (engagement farming)
+- [x] `replyguy` — generate reply variants to any post (engagement farming)
 - [ ] `namelab` — product name generator with domain-check hints
 - [ ] `changelogify` — turn git diffs into user-facing release notes
 - [ ] `faqforge` — turn docs/support text into an FAQ page
