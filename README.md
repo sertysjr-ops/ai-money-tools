@@ -34,6 +34,16 @@ pbpaste | node tools/replyguy/cli.js --tone witty --agree
 node tools/replyguy/cli.js post.txt --context "I'm a devtools founder"
 ```
 
+### 📋 changelogify
+
+Turn git history into user-facing release notes.
+
+```bash
+node tools/changelogify/cli.js                # since last tag (or last 50 commits)
+node tools/changelogify/cli.js v1.2.0..HEAD --style hype
+node tools/changelogify/cli.js --out CHANGELOG.md
+```
+
 ## Setup
 
 ```bash
