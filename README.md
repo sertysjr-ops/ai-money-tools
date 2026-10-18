@@ -44,6 +44,33 @@ node tools/changelogify/cli.js v1.2.0..HEAD --style hype
 node tools/changelogify/cli.js --out CHANGELOG.md
 ```
 
+### 🪝 hookline
+
+Generate cold-open hooks for posts, videos, and articles — scroll-stopping first lines.
+
+```bash
+node tools/hookline/cli.js "why most side projects fail" --count 5
+node tools/hookline/cli.js draft.txt --kind video --voice contrarian
+cat notes.md | node tools/hookline/cli.js --kind article
+```
+
+## Install
+
+Any of these work:
+
+```bash
+# run straight from the repo (zero install)
+node bin/dani-tools.js hookline "your topic"
+
+# via npm from GitHub
+npx github:sertysjr-ops/ai-money-tools hookline "your topic"
+
+# or link it globally
+npm link
+dani-tools threadsmith article.txt --tweets 7
+changelogify --style hype
+```
+
 ## Setup
 
 ```bash
@@ -67,7 +94,9 @@ Optional env vars:
 ## Ideas backlog
 
 - [x] `replyguy` — generate reply variants to any post (engagement farming)
+- [x] `changelogify` — turn git diffs into user-facing release notes
+- [x] `hookline` — cold-open hook generator for posts/videos/articles
 - [ ] `namelab` — product name generator with domain-check hints
-- [ ] `changelogify` — turn git diffs into user-facing release notes
 - [ ] `faqforge` — turn docs/support text into an FAQ page
+- [ ] `altmaker` — viral alternate angles A/B generator
 - [ ] Chrome extension wrapper for threadsmith (select text → thread)

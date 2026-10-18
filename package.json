@@ -1,0 +1,31 @@
+{
+  "name": "dani-tools",
+  "version": "0.3.0",
+  "description": "Zero-dependency AI CLI tools powered by a local Ollama model — no API keys, works offline",
+  "repository": "sertysjr-ops/ai-money-tools",
+  "license": "MIT",
+  "engines": {
+    "node": ">=18"
+  },
+  "bin": {
+    "dani-tools": "bin/dani-tools.js",
+    "threadsmith": "tools/threadsmith/cli.js",
+    "quotemine": "tools/quotemine/cli.js",
+    "replyguy": "tools/replyguy/cli.js",
+    "changelogify": "tools/changelogify/cli.js",
+    "hookline": "tools/hookline/cli.js"
+  },
+  "scripts": {
+    "test": "node test/run-all.js"
+  },
+  "keywords": [
+    "ai",
+    "cli",
+    "ollama",
+    "offline",
+    "content",
+    "twitter",
+    "threads",
+    "release-notes"
+  ]
+}
