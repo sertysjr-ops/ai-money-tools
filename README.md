@@ -54,6 +54,16 @@ node tools/hookline/cli.js draft.txt --kind video --voice contrarian
 cat notes.md | node tools/hookline/cli.js --kind article
 ```
 
+### 🏷️ namelab
+
+Product & business name generator with domain hints.
+
+```bash
+node tools/namelab/cli.js "offline AI voice assistant for developers"
+node tools/namelab/cli.js pitch.md --style premium --count 10
+node tools/namelab/cli.js "budget tracker" --style playful --domain .app
+```
+
 ## Install
 
 Any of these work:
@@ -84,6 +94,17 @@ Optional env vars:
 | `OLLAMA_URL` | `http://localhost:11434` | Ollama endpoint |
 | `OLLAMA_MODEL` | `qwen3.5:4b` | Model to use |
 
+## Tests
+
+```bash
+npm test                      # smoke-test all 6 tools against live Ollama
+node test/run-all.js namelab  # …or just the ones you touched
+```
+
+Wiring gate, not a quality gate: every tool gets a tiny canned input and must
+exit 0 with non-trivial output. Catches broken requires, dead Ollama, bad
+flags, empty model output.
+
 ## Philosophy
 
 - **Build in a day, ship in a weekend** — every tool is <100 lines
@@ -96,7 +117,7 @@ Optional env vars:
 - [x] `replyguy` — generate reply variants to any post (engagement farming)
 - [x] `changelogify` — turn git diffs into user-facing release notes
 - [x] `hookline` — cold-open hook generator for posts/videos/articles
-- [ ] `namelab` — product name generator with domain-check hints
+- [x] `namelab` — product name generator with domain-check hints
 - [ ] `faqforge` — turn docs/support text into an FAQ page
 - [ ] `altmaker` — viral alternate angles A/B generator
 - [ ] Chrome extension wrapper for threadsmith (select text → thread)
