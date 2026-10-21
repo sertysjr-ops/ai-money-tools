@@ -64,6 +64,17 @@ node tools/namelab/cli.js pitch.md --style premium --count 10
 node tools/namelab/cli.js "budget tracker" --style playful --domain .app
 ```
 
+### ❓ faqforge
+
+Turn docs, READMEs, or notes into a polished self-contained FAQ page (dark
+theme, zero-JS accordions — drop it straight into any site).
+
+```bash
+node tools/faqforge/cli.js README.md --out faq.html
+node tools/faqforge/cli.js "how subscriptions work" --count 6 --style landing
+cat guide.md | node tools/faqforge/cli.js --style support --title "Help Center"
+```
+
 ## Install
 
 Any of these work:
@@ -97,7 +108,7 @@ Optional env vars:
 ## Tests
 
 ```bash
-npm test                      # smoke-test all 6 tools against live Ollama
+npm test                      # smoke-test all 7 tools against live Ollama
 node test/run-all.js namelab  # …or just the ones you touched
 ```
 
@@ -118,6 +129,6 @@ flags, empty model output.
 - [x] `changelogify` — turn git diffs into user-facing release notes
 - [x] `hookline` — cold-open hook generator for posts/videos/articles
 - [x] `namelab` — product name generator with domain-check hints
-- [ ] `faqforge` — turn docs/support text into an FAQ page
+- [x] `faqforge` — turn docs/support text into an FAQ page
 - [ ] `altmaker` — viral alternate angles A/B generator
 - [ ] Chrome extension wrapper for threadsmith (select text → thread)

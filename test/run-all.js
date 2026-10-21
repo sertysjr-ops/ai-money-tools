@@ -66,6 +66,15 @@ const CASES = [
     args: ["offline AI voice assistant for developers", "--count", "4", "--style", "startup"],
     minChars: 60,
   },
+  {
+    tool: "faqforge",
+    args: ["--count", "4", "--style", "docs", "--out",
+      path.join(os.tmpdir(), "faqforge-test.html")],
+    stdin: "# Demo App\n\nDemo App stores your notes locally and syncs them between " +
+      "devices over encrypted peer-to-peer connections. Free tier: 3 devices, " +
+      "500 notes. Pro: unlimited devices, shared workspaces, priority support.",
+    minChars: 20,
+  },
 ];
 
 const TIMEOUT_MS = 120000;
