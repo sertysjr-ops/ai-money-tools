@@ -15,10 +15,11 @@
  */
 const fs = require("fs");
 const { chat } = require("../../lib/ollama");
+const { globals } = require("../../lib/args");
 
 function parseArgs(argv) {
   const opts = { count: 8, style: "startup", domain: ".com", hints: true, input: null };
-  const args = argv.slice(2);
+  const args = globals(argv.slice(2), __filename);
   for (let i = 0; i < args.length; i++) {
     if (args[i] === "--count") opts.count = parseInt(args[++i], 10);
     else if (args[i] === "--style") opts.style = args[++i];

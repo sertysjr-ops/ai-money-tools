@@ -1,6 +1,6 @@
 {
   "name": "dani-tools",
-  "version": "0.6.0",
+  "version": "0.7.0",
   "description": "Zero-dependency AI CLI tools powered by a local Ollama model — no API keys, works offline",
   "repository": "sertysjr-ops/ai-money-tools",
   "license": "MIT",

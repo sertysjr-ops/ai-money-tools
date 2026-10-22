@@ -1,0 +1,64 @@
+#compdef dani-tools
+# Zsh completion for the dani-tools AI CLI toolkit.
+#
+# Install:
+#   1. mkdir -p ~/.zfunc && cp completions/_dani-tools ~/.zfunc/
+#   2. add `fpath+=("$HOME/.zfunc")` + `autoload -U compinit && compinit` to ~/.zshrc
+#   (npm link / global install also drops this on most setups' fpath via the
+#    package's "files"; source this file directly as a fallback)
+
+_dani-tools() {
+  local -a tools
+  tools=(
+    'threadsmith:long-form → Twitter/X thread'
+    'quotemine:extract quotable lines, ranked'
+    'replyguy:multi-tone reply drafter'
+    'changelogify:git history → release notes'
+    'hookline:cold-open hook generator'
+    'namelab:product name generator'
+    'faqforge:docs → FAQ page'
+    'altmaker:A/B viral angle generator'
+  )
+
+  _arguments -C \
+    '(--model)--model[Ollama model for this run]:model:(qwen3.5:2b qwen3.5:4b qwen3.5:9b)' \
+    '(-h --help)'{-h,--help}'[show help]' \
+    '1:tool:->tool' \
+    '*::args:->args'
+
+  case "$state" in
+    tool)
+      _describe -t tools 'dani-tools tool' tools
+      ;;
+    args)
+      # after the tool name, complete files + the common flags
+      _files
+      case "$words[1]" in
+        threadsmith)
+          _arguments '--tone[tone]:tone:(casual professional bold funny)' \
+                     '--tweets[tweet count]:count:' '--no-numbers[no numbering]' ;;
+        quotemine)
+          _arguments '--count[quote count]:count:' '--max[max chars]:max:' ;;
+        replyguy)
+          _arguments '--tone[tone]:tone:(witty supportive constructive counter)' '--count[count]:count:' ;;
+        changelogify)
+          _arguments '--style[style]:style:(concise hype technical)' '--version[version]:version:' ;;
+        hookline)
+          _arguments '--count[hook count]:count:' '--kind[kind]:kind:(video post article)' \
+                     '--voice[voice]:voice:(bold curious contrarian)' ;;
+        namelab)
+          _arguments '--count[name count]:count:' '--style[style]:style:(startup premium playful technical)' \
+                     '--domain[domain hints]' '--no-hints[no hints]' ;;
+        faqforge)
+          _arguments '--count[FAQ count]:count:' '--style[style]:style:(docs landing support)' \
+                     '--out[output html]:file:_files' ;;
+        altmaker)
+          _arguments '--count[angle count]:count:' \
+                     '--kind[kind]:kind:(contrarian curiosity data story bold all)' \
+                     '--platform[platform]:platform:(twitter linkedin blog)' '--json[JSON output]' ;;
+      esac
+      ;;
+  esac
+}
+
+_dani-tools "$@"

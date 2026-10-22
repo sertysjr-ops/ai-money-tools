@@ -14,10 +14,11 @@
  */
 const fs = require("fs");
 const { chat } = require("../../lib/ollama");
+const { globals } = require("../../lib/args");
 
 function parseArgs(argv) {
   const opts = { tone: "casual", tweets: 7, numbers: true, file: null };
-  const args = argv.slice(2);
+  const args = globals(argv.slice(2), __filename);
   for (let i = 0; i < args.length; i++) {
     if (args[i] === "--tone") opts.tone = args[++i];
     else if (args[i] === "--tweets") opts.tweets = parseInt(args[++i], 10);

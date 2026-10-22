@@ -17,10 +17,11 @@
 const { execSync } = require("child_process");
 const fs = require("fs");
 const { chat } = require("../../lib/ollama");
+const { globals } = require("../../lib/args");
 
 function parseArgs(argv) {
   const opts = { range: null, version: null, style: "detailed", raw: false, out: null };
-  const args = argv.slice(2);
+  const args = globals(argv.slice(2), __filename);
   for (let i = 0; i < args.length; i++) {
     if (args[i] === "--version") opts.version = args[++i];
     else if (args[i] === "--style") opts.style = args[++i];

@@ -104,6 +104,33 @@ dani-tools threadsmith article.txt --tweets 7
 changelogify --style hype
 ```
 
+## Global flags
+
+Every tool accepts:
+
+```
+--model <name>   Ollama model for this run (default: qwen3.5:4b or $OLLAMA_MODEL)
+-h, --help       man-style help — prints the tool's Usage + options
+```
+
+`--model` works both before the tool name (dispatcher forwards it) and
+after it:
+
+```bash
+dani-tools --model qwen3.5:2b quotemine notes.txt --count 5
+quotemine notes.txt --count 5 --model qwen3.5:9b
+```
+
+## Shell completions
+
+A zsh completion script lives at `completions/_dani-tools` — tool names,
+per-tool flags, file completion:
+
+```bash
+mkdir -p ~/.zfunc && cp completions/_dani-tools ~/.zfunc/
+# then in ~/.zshrc:  fpath+=("$HOME/.zfunc"); autoload -U compinit && compinit
+```
+
 ## Setup
 
 ```bash

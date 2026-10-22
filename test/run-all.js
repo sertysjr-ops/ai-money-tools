@@ -84,6 +84,20 @@ const CASES = [
 
 const TIMEOUT_MS = 120000;
 
+/** `--help` must exit 0 and print the tool's Usage block — no LLM needed. */
+function helpCheck(cli, label) {
+  const res = spawnSync(process.execPath, [cli, "--help"], {
+    encoding: "utf8", timeout: 15000,
+  });
+  const out = (res.stdout || "");
+  return {
+    ok: res.status === 0 && /Usage:/.test(out) && /--model/.test(out),
+    detail: res.status === 0
+      ? `${out.split("\n").length} lines`
+      : `exit ${res.status}: ${(res.stderr || "").slice(0, 120)}`,
+  };
+}
+
 function runCase(c) {
   const cli = path.join(ROOT, "tools", c.tool, "cli.js");
   if (!fs.existsSync(cli)) {
@@ -136,7 +150,35 @@ function main() {
   }
 
   let failed = 0;
-  console.log(`smoke-testing ${cases.length} tool(s) against live model…\n`);
+
+  // phase 1: --help wiring on every tool + the dispatcher (no LLM calls)
+  console.log("phase 1 — --help wiring (no LLM)\n");
+  const helpTargets = [
+    ...CASES.map((c) => [path.join(ROOT, "tools", c.tool, "cli.js"), c.tool]),
+    [path.join(ROOT, "bin", "dani-tools.js"), "dani-tools"],
+  ];
+  for (const [cli, label] of helpTargets) {
+    const r = helpCheck(cli, label);
+    console.log(`${r.ok ? "✅" : "❌"} ${label.padEnd(13)} --help → ${r.detail}`);
+    if (!r.ok) failed++;
+  }
+
+  // phase 2: dispatcher forwards a pre-tool --model to the child (env path)
+  console.log("\nphase 2 — global --model flag (live, small model)\n");
+  const modelProbe = spawnSync(
+    process.execPath,
+    [path.join(ROOT, "bin", "dani-tools.js"), "--model", "qwen3.5:2b",
+     "hookline", "morning routines for founders", "--count", "2"],
+    { encoding: "utf8", timeout: TIMEOUT_MS }
+  );
+  const probeOut = (modelProbe.stdout || "").trim();
+  const modelOk = modelProbe.status === 0 && probeOut.length >= 40;
+  console.log(`${modelOk ? "✅" : "❌"} dispatcher --model qwen3.5:2b → ` +
+    (modelOk ? `${probeOut.length} chars` : `exit ${modelProbe.status}: ${(modelProbe.stderr || "").slice(0, 120)}`));
+  if (modelOk) console.log(`   ↳ ${probeOut.split("\n")[0].slice(0, 100)}`);
+  if (!modelOk) failed++;
+
+  console.log("\nphase 3 — smoke-testing tools against live model…\n");
   for (const c of cases) {
     const r = runCase(c);
     const mark = r.ok ? "✅" : "❌";
@@ -144,7 +186,8 @@ function main() {
     if (r.ok && r.preview) console.log(`   ↳ ${r.preview.slice(0, 100)}`);
     if (!r.ok) failed++;
   }
-  console.log(`\n${cases.length - failed}/${cases.length} passed`);
+  const totalChecks = helpTargets.length + 1 + cases.length;
+  console.log(`\n${totalChecks - failed}/${totalChecks} passed`);
   process.exit(failed ? 1 : 0);
 }
 
