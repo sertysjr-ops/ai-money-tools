@@ -75,6 +75,18 @@ node tools/faqforge/cli.js "how subscriptions work" --count 6 --style landing
 cat guide.md | node tools/faqforge/cli.js --style support --title "Help Center"
 ```
 
+### 🧪 altmaker
+
+A/B viral angle generator — same idea, N different framings. Each angle
+comes labeled with its type, the rewritten hook, and a why-it-works note,
+so you ship the framing with the best shot, not the first one you wrote.
+
+```bash
+node tools/altmaker/cli.js "your draft or topic" --count 5
+node tools/altmaker/cli.js draft.txt --kind contrarian --platform linkedin
+cat notes.md | node tools/altmaker/cli.js --json   # pipe into other tools
+```
+
 ## Install
 
 Any of these work:
@@ -130,5 +142,5 @@ flags, empty model output.
 - [x] `hookline` — cold-open hook generator for posts/videos/articles
 - [x] `namelab` — product name generator with domain-check hints
 - [x] `faqforge` — turn docs/support text into an FAQ page
-- [ ] `altmaker` — viral alternate angles A/B generator
+- [x] `altmaker` — A/B viral angles: same idea, N framings with why-it-works
 - [ ] Chrome extension wrapper for threadsmith (select text → thread)

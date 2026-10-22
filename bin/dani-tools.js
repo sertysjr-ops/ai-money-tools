@@ -6,13 +6,13 @@
  *   npx dani-tools <tool> [args...]
  *   dani-tools threadsmith draft.txt --tweets 7
  *
- * Tools: threadsmith, quotemine, replyguy, changelogify, hookline, namelab, faqforge
+ * Tools: threadsmith, quotemine, replyguy, changelogify, hookline, namelab, faqforge, altmaker
  */
 const { spawnSync } = require("child_process");
 const path = require("path");
 const fs = require("fs");
 
-const TOOLS = ["threadsmith", "quotemine", "replyguy", "changelogify", "hookline", "namelab", "faqforge"];
+const TOOLS = ["threadsmith", "quotemine", "replyguy", "changelogify", "hookline", "namelab", "faqforge", "altmaker"];
 
 const tool = process.argv[2];
 if (!tool || tool === "--help" || tool === "-h") {

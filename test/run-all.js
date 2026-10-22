@@ -75,6 +75,11 @@ const CASES = [
       "500 notes. Pro: unlimited devices, shared workspaces, priority support.",
     minChars: 20,
   },
+  {
+    tool: "altmaker",
+    args: ["offline AI tools are the future of indie hacking", "--count", "3", "--kind", "all"],
+    minChars: 80,
+  },
 ];
 
 const TIMEOUT_MS = 120000;
