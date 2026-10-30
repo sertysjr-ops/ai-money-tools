@@ -87,6 +87,43 @@ node tools/altmaker/cli.js draft.txt --kind contrarian --platform linkedin
 cat notes.md | node tools/altmaker/cli.js --json   # pipe into other tools
 ```
 
+## Local HTTP API (`serve.js`)
+
+Wraps every text-in/text-out tool as a tiny JSON API — same CLIs under the
+hood (spawned per request, stdin → stdout), so the CLI stays the single
+source of truth. Built for the Chrome extension, n8n/Make webhooks, or any
+local automation.
+
+```bash
+node serve.js        # → http://127.0.0.1:7890  (or DANI_TOOLS_PORT=8000)
+```
+
+```
+GET  /api/health → { ok, model, tools }
+POST /api/run    → { tool, input, flags? } → { ok, tool, output, tookMs }
+                   flags: CLI flags without dashes, per-tool whitelist,
+                   e.g. { "tone": "bold", "tweets": 8 }
+```
+
+CORS is open (`*`) so `chrome-extension://` origins can call it; the server
+binds to localhost only. `changelogify` is CLI-only (it reads a git repo,
+not stdin text).
+
+## Chrome extension (Threadsmith)
+
+`extension/` is a Manifest V3 extension: select any text on any page →
+right-click → "Threadsmith: turn into X thread" → a results tab opens with
+numbered tweet cards, per-tweet character counts (280+ flagged red), and a
+copy-all button.
+
+```bash
+node serve.js   # must be running — the extension calls the local API
+```
+
+Then chrome://extensions → Developer mode → Load unpacked → pick
+`extension/`. Everything runs locally: page text goes to 127.0.0.1, never
+to a cloud.
+
 ## Install
 
 Any of these work:
@@ -147,8 +184,9 @@ Optional env vars:
 ## Tests
 
 ```bash
-npm test                      # smoke-test all 7 tools against live Ollama
-node test/run-all.js namelab  # …or just the ones you touched
+npm test                      # smoke-test all tools + the HTTP API against live Ollama
+node test/run-all.js namelab  # …or just the tools you touched
+node test/serve.test.js       # …or just the API + extension wiring
 ```
 
 Wiring gate, not a quality gate: every tool gets a tiny canned input and must
@@ -170,4 +208,5 @@ flags, empty model output.
 - [x] `namelab` — product name generator with domain-check hints
 - [x] `faqforge` — turn docs/support text into an FAQ page
 - [x] `altmaker` — A/B viral angles: same idea, N framings with why-it-works
-- [ ] Chrome extension wrapper for threadsmith (select text → thread)
+- [x] Chrome extension wrapper for threadsmith (select text → thread)
+- [x] `serve.js` — local HTTP API wrapping the tools (n8n/Make/webhook-ready)
