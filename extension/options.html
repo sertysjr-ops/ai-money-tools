@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>Threadsmith options</title>
+  <style>
+    :root { color-scheme: dark; }
+    body {
+      font: 14px/1.5 -apple-system, "Segoe UI", system-ui, sans-serif;
+      background: #0b0e14; color: #e6e9ef;
+      max-width: 420px; margin: 40px auto; padding: 0 20px;
+    }
+    h1 { font-size: 20px; margin: 0 0 4px; }
+    h1 .x { color: #7ee787; }
+    p.sub { color: #8b93a7; margin: 0 0 24px; }
+    label { display: block; font-weight: 600; margin: 18px 0 6px; }
+    select, input[type=range] { width: 100%; }
+    select {
+      background: #161b26; color: #e6e9ef; border: 1px solid #2a3347;
+      border-radius: 8px; padding: 8px 10px; font: inherit;
+    }
+    .row { display: flex; align-items: center; gap: 12px; }
+    .row output {
+      min-width: 2ch; text-align: center; font-weight: 700; color: #7ee787;
+      background: #161b26; border: 1px solid #2a3347; border-radius: 8px;
+      padding: 6px 10px;
+    }
+    .hint { color: #8b93a7; font-size: 12px; margin-top: 4px; }
+    #save {
+      margin-top: 28px; width: 100%; padding: 10px; font: inherit; font-weight: 700;
+      color: #0b0e14; background: #7ee787; border: 0; border-radius: 8px; cursor: pointer;
+    }
+    #save:hover { background: #95f0a0; }
+    #saved { color: #7ee787; text-align: center; margin-top: 10px; min-height: 1.2em; }
+  </style>
+</head>
+<body>
+  <h1>Threadsmith <span class="x">options</span></h1>
+  <p class="sub">Defaults for right-click → "turn into X thread". 100% local.</p>
+
+  <label for="tone">Tone</label>
+  <select id="tone">
+    <option value="casual">casual — conversational, first-person</option>
+    <option value="professional">professional — polished, credible</option>
+    <option value="bold">bold — punchy, opinionated</option>
+    <option value="funny">funny — witty, meme-aware</option>
+  </select>
+
+  <label for="tweets">Thread length</label>
+  <div class="row">
+    <input type="range" id="tweets" min="3" max="10" step="1" value="7">
+    <output id="tweetsOut">7</output>
+  </div>
+  <div class="hint">Target tweet count (3–10). The model may land ±1.</div>
+
+  <button id="save">Save</button>
+  <div id="saved"></div>
+
+  <script src="options.js"></script>
+</body>
+</html>

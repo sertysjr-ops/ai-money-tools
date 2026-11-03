@@ -13,6 +13,12 @@
  *                      flags is an object of CLI flags without the dashes,
  *                      e.g. { "tone": "bold", "tweets": 8, "no-numbers": true }
  *                      Unknown flags are rejected (per-tool whitelist).
+ *   POST /api/batch  → { jobs: [{ tool, input, flags? }, ...] } (max 10)
+ *                      → { ok, results: [{ ok, tool, output|error, tookMs }],
+ *                          tookMs }
+ *                      Jobs run sequentially (Ollama is serial anyway) and
+ *                      each is isolated: one failure doesn't sink the batch.
+ *                      This is the n8n/Make-webhook shape.
  *
  * Usage:
  *   node serve.js              # http://127.0.0.1:7890
@@ -125,7 +131,55 @@ const server = http.createServer(async (req, res) => {
     return;
   }
 
-  send(res, 404, { ok: false, error: "not found — GET /api/health or POST /api/run" });
+  if (req.method === "POST" && req.url === "/api/batch") {
+    let body = "";
+    req.on("data", (d) => {
+      body += d;
+      if (body.length > MAX_INPUT * 12) req.destroy(); // 10 jobs + slack
+    });
+    req.on("end", async () => {
+      let payload;
+      try {
+        payload = JSON.parse(body);
+      } catch {
+        return send(res, 400, { ok: false, error: "bad json" });
+      }
+      const jobs = payload?.jobs;
+      if (!Array.isArray(jobs) || jobs.length === 0) {
+        return send(res, 400, { ok: false, error: "need { jobs: [{ tool, input, flags? }, ...] }" });
+      }
+      if (jobs.length > 10) {
+        return send(res, 400, { ok: false, error: "max 10 jobs per batch" });
+      }
+      for (const j of jobs) {
+        if (typeof j?.tool !== "string" || typeof j?.input !== "string" || !j.input.trim()) {
+          return send(res, 400, { ok: false, error: "every job needs { tool: string, input: string }" });
+        }
+        if (j.input.length > MAX_INPUT) {
+          return send(res, 413, { ok: false, error: `job input too large (>${MAX_INPUT} chars)` });
+        }
+      }
+      const t0 = Date.now();
+      const results = [];
+      for (const j of jobs) {
+        const jt0 = Date.now();
+        try {
+          const output = await runTool(j.tool, j.input, j.flags || {});
+          results.push({ ok: true, tool: j.tool, output, tookMs: Date.now() - jt0 });
+        } catch (e) {
+          results.push({ ok: false, tool: j.tool, error: e.message, tookMs: Date.now() - jt0 });
+        }
+      }
+      send(res, 200, {
+        ok: results.every((r) => r.ok),
+        results,
+        tookMs: Date.now() - t0,
+      });
+    });
+    return;
+  }
+
+  send(res, 404, { ok: false, error: "not found — GET /api/health, POST /api/run, or POST /api/batch" });
 });
 
 server.listen(PORT, HOST, () => {

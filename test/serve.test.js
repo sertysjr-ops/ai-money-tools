@@ -153,6 +153,49 @@ async function main() {
     const nf = await get(port, "/nope");
     check("unknown route → 404", nf.code === 404);
 
+    // 6b. batch mode: two real jobs, sequential, per-job isolation
+    const b = await post(port, "/api/batch", {
+      jobs: [
+        { tool: "quotemine", input: "The best code is no code. Done is better than perfect. Simplicity wins.", flags: { count: 2 } },
+        { tool: "hookline", input: "a todo app that guilt-trips you", flags: { count: 2 } },
+      ],
+    });
+    check(
+      "POST /api/batch → ok + 2 results with output",
+      b.body.ok === true && b.body.results.length === 2 &&
+        b.body.results.every((r) => r.ok && (r.output || "").length > 10),
+      JSON.stringify(b.body).slice(0, 200)
+    );
+    check(
+      "batch results carry per-job tool + tookMs",
+      b.body.results[0].tool === "quotemine" && b.body.results[1].tool === "hookline" &&
+        b.body.results.every((r) => r.tookMs > 0) && b.body.tookMs > 0
+    );
+
+    // 6c. batch isolation: one bad tool doesn't sink the batch
+    const bi = await post(port, "/api/batch", {
+      jobs: [
+        { tool: "evil", input: "x" },
+        { tool: "quotemine", input: "Ship early. Ship often. Learn always.", flags: { count: 1 } },
+      ],
+    });
+    check(
+      "batch isolates failures (ok:false overall, good job survives)",
+      bi.code === 200 && bi.body.ok === false &&
+        bi.body.results[0].ok === false && bi.body.results[1].ok === true,
+      JSON.stringify(bi.body).slice(0, 200)
+    );
+
+    // 6d. batch validation
+    const tooMany = await post(port, "/api/batch", {
+      jobs: Array.from({ length: 11 }, () => ({ tool: "quotemine", input: "x" })),
+    });
+    check("batch >10 jobs → 400", tooMany.code === 400);
+    const emptyJobs = await post(port, "/api/batch", { jobs: [] });
+    check("batch empty jobs → 400", emptyJobs.code === 400);
+    const badJob = await post(port, "/api/batch", { jobs: [{ tool: "quotemine", input: "  " }] });
+    check("batch job with blank input → 400", badJob.code === 400);
+
     // 7. extension static analysis: wiring tokens present
     const fs = require("fs");
     const bg = fs.readFileSync(path.join(ROOT, "extension", "background.js"), "utf8");
@@ -166,6 +209,26 @@ async function main() {
     check(
       "extension manifest v3 + service worker",
       mf.manifest_version === 3 && mf.background.service_worker === "background.js"
+    );
+
+    // 8. options page wiring: prefs saved in options.js drive background.js
+    const optHtml = fs.readFileSync(path.join(ROOT, "extension", "options.html"), "utf8");
+    const optJs = fs.readFileSync(path.join(ROOT, "extension", "options.js"), "utf8");
+    check(
+      "options page registered + has tone/tweets controls",
+      mf.options_page === "options.html" &&
+        optHtml.includes('id="tone"') && optHtml.includes('id="tweets"') &&
+        optHtml.includes("casual") && optHtml.includes("bold") &&
+        optHtml.includes("professional") && optHtml.includes("funny")
+    );
+    check(
+      "background reads prefs from storage (no hardcoded flags)",
+      bg.includes("chrome.storage.sync.get") && bg.includes("prefs.tone") &&
+        bg.includes("prefs.tweets") && !bg.includes('flags: { tone: "'),
+    );
+    check(
+      "options.js saves tone + tweets to sync storage",
+      optJs.includes("chrome.storage.sync.set") && optJs.includes("tone") && optJs.includes("tweets")
     );
 
     console.log(`\n${passed} checks passed`);

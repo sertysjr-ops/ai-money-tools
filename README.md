@@ -103,6 +103,9 @@ GET  /api/health → { ok, model, tools }
 POST /api/run    → { tool, input, flags? } → { ok, tool, output, tookMs }
                    flags: CLI flags without dashes, per-tool whitelist,
                    e.g. { "tone": "bold", "tweets": 8 }
+POST /api/batch  → { jobs: [{ tool, input, flags? }, ...] } (max 10)
+                 → { ok, results: [{ ok, tool, output|error, tookMs }], tookMs }
+                   sequential, per-job isolated — the n8n/Make shape
 ```
 
 CORS is open (`*`) so `chrome-extension://` origins can call it; the server
@@ -114,7 +117,9 @@ not stdin text).
 `extension/` is a Manifest V3 extension: select any text on any page →
 right-click → "Threadsmith: turn into X thread" → a results tab opens with
 numbered tweet cards, per-tweet character counts (280+ flagged red), and a
-copy-all button.
+copy-all button. An options page (chrome://extensions → Threadsmith →
+Extension options) sets the default tone (casual/professional/bold/funny)
+and thread length (3–10 tweets), synced via `chrome.storage.sync`.
 
 ```bash
 node serve.js   # must be running — the extension calls the local API

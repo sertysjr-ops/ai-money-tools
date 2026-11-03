@@ -11,8 +11,14 @@ chrome.runtime.onInstalled.addListener(() => {
   });
 });
 
+// Defaults mirror options.js; user prefs (options page) override via
+// chrome.storage.sync.
+const DEFAULT_PREFS = { tone: "casual", tweets: 7 };
+
 chrome.contextMenus.onClicked.addListener(async (info, tab) => {
   if (info.menuItemId !== "threadsmith" || !info.selectionText) return;
+
+  const prefs = await chrome.storage.sync.get(DEFAULT_PREFS);
 
   const job = {
     status: "working",
@@ -29,7 +35,7 @@ chrome.contextMenus.onClicked.addListener(async (info, tab) => {
       body: JSON.stringify({
         tool: "threadsmith",
         input: info.selectionText,
-        flags: { tone: "casual", tweets: 7 },
+        flags: { tone: prefs.tone, tweets: prefs.tweets },
       }),
     });
     const data = await res.json();
