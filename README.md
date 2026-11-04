@@ -217,10 +217,23 @@ Optional env vars:
 ## Tests
 
 ```bash
-npm test                      # smoke-test all tools + the HTTP API against live Ollama
+npm test                      # smoke-test all tools + the HTTP API + the pack zip
 node test/run-all.js namelab  # …or just the tools you touched
 node test/serve.test.js       # …or just the API + extension wiring
+node test/pack.test.js        # …or just the shippable artifact
 ```
+
+## Packaging (sellable zip)
+
+```bash
+npm run pack    # → dist/dani-tools-<version>.zip
+```
+
+Stages exactly what a customer needs (8 CLIs, dispatcher, libs, automation
+server, config example, completions, LICENSE, INSTALL.md, LISTING.md) and
+zips it. `marketing/LISTING.md` is the paste-ready Gumroad product page.
+`test/pack.test.js` verifies every bin target ships and no source-only
+dirs leak into the artifact.
 
 Wiring gate, not a quality gate: every tool gets a tiny canned input and must
 exit 0 with non-trivial output. Catches broken requires, dead Ollama, bad
