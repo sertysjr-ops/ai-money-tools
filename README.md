@@ -146,6 +146,34 @@ dani-tools threadsmith article.txt --tweets 7
 changelogify --style hype
 ```
 
+## Config file (creator-CLI tier)
+
+One optional JSON file tunes every tool — your default model, your favorite
+flags per tool, and full system-prompt overrides for a personal voice:
+
+```jsonc
+{
+  "model": "qwen3.5:4b",
+  "defaults": {
+    "threadsmith": { "tone": "bold", "tweets": 8 },
+    "hookline":    { "count": 10 }
+  },
+  "prompts": {
+    "threadsmith": { "system": "You write threads like a sharp indie hacker…" }
+  }
+}
+```
+
+Search order: `$DANI_TOOLS_CONFIG` → `./dani-tools.config.json` →
+`~/.config/dani-tools/config.json`. Explicit CLI flags always beat config
+defaults; a prompt override replaces the tool's whole system prompt (keep
+the output-format rules in it). See `dani-tools.config.example.json`, and
+inspect what any tool resolved with:
+
+```bash
+threadsmith --print-config
+```
+
 ## Global flags
 
 Every tool accepts:

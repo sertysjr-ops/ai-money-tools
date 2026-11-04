@@ -15,6 +15,7 @@
 const fs = require("fs");
 const { chat } = require("../../lib/ollama");
 const { globals } = require("../../lib/args");
+const { promptFor } = require("../../lib/config");
 
 function parseArgs(argv) {
   const opts = { count: 6, kind: "post", voice: "bold", input: null };
@@ -55,12 +56,12 @@ async function main() {
     process.exit(1);
   }
 
-  const system =
+  const system = promptFor("hookline",
     "You write hooks — the cold open of a piece of content. " +
     "A great hook is specific, creates an open loop, and never wastes a word. " +
     "No clickbait that the content can't cash. " +
     "Return exactly the requested number of hooks as a plain numbered list, strongest first, " +
-    "each on its own line, no commentary, no blank lines.";
+    "each on its own line, no commentary, no blank lines.");
 
   const user =
     `Generate ${opts.count} hooks ${KIND_HINTS[opts.kind] || KIND_HINTS.post}.\n` +

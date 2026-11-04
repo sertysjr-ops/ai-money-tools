@@ -16,6 +16,7 @@
 const fs = require("fs");
 const { chat } = require("../../lib/ollama");
 const { globals } = require("../../lib/args");
+const { promptFor } = require("../../lib/config");
 
 function parseArgs(argv) {
   const opts = { count: 8, style: "startup", domain: ".com", hints: true, input: null };
@@ -65,11 +66,11 @@ async function main() {
       `an alternative like .io/.app/.dev. Keep the hint under 8 words.`
     : "Output only the names, one per line, no extra commentary.";
 
-  const system =
+  const system = promptFor("namelab",
     "You name products. Great names are short (1-3 syllables), ownable, " +
     "spellable after hearing once, and don't collide with famous brands. " +
     "Return exactly the requested number of names as a plain numbered list, " +
-    "strongest first, each on its own line, no blank lines.";
+    "strongest first, each on its own line, no blank lines.");
 
   const user =
     `Generate ${opts.count} names in this style: ${style}.\n` +

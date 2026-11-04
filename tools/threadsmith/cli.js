@@ -15,6 +15,7 @@
 const fs = require("fs");
 const { chat } = require("../../lib/ollama");
 const { globals } = require("../../lib/args");
+const { promptFor } = require("../../lib/config");
 
 function parseArgs(argv) {
   const opts = { tone: "casual", tweets: 7, numbers: true, file: null };
@@ -46,11 +47,11 @@ async function main() {
     process.exit(1);
   }
 
-  const system =
+  const system = promptFor("threadsmith",
     "You convert long-form content into viral Twitter/X threads. " +
     "Each tweet must be under 280 characters including the numbering prefix. " +
     "Hook hard in tweet 1. One idea per tweet. No hashtags unless the source demands it. " +
-    "Output the thread and nothing else.";
+    "Output the thread and nothing else.");
   const user =
     `Tone: ${opts.tone}\nTarget: ${opts.tweets} tweets\n\n` +
     `Rules:\n- Number each tweet as "1/", "2/", etc.\n` +

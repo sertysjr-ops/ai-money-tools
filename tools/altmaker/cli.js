@@ -22,6 +22,7 @@
 const fs = require("fs");
 const { chat } = require("../../lib/ollama");
 const { globals } = require("../../lib/args");
+const { promptFor } = require("../../lib/config");
 
 function parseArgs(argv) {
   const opts = { count: 4, kind: "all", platform: "twitter", json: false, input: null };
@@ -139,12 +140,12 @@ async function main() {
   }
   const n = Math.min(10, Math.max(1, opts.count || 4));
 
-  const system =
+  const system = promptFor("altmaker",
     "You are a viral-content strategist. You take one idea and reframe it " +
     "into multiple distinct angles, each labeled with its angle type in " +
     "[brackets], followed by the rewritten hook, an em-dash, and a one-line " +
     "why-it-works note. Angles must differ in framing, not just wording. " +
-    `Return exactly ${n} items as a numbered list, no preamble, no blank lines.`;
+    `Return exactly ${n} items as a numbered list, no preamble, no blank lines.`);
 
   const user =
     `Source material:\n${input}\n\n` +

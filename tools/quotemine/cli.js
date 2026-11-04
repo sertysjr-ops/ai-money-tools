@@ -13,6 +13,7 @@
 const fs = require("fs");
 const { chat } = require("../../lib/ollama");
 const { globals } = require("../../lib/args");
+const { promptFor } = require("../../lib/config");
 
 function parseArgs(argv) {
   const opts = { count: 8, max: 240, file: null };
@@ -43,10 +44,10 @@ async function main() {
     process.exit(1);
   }
 
-  const system =
+  const system = promptFor("quotemine",
     "You extract the most quotable, shareable lines from text for social media. " +
     "Pick lines that stand alone without context, are surprising or contrarian or beautifully phrased. " +
-    "Return them as a plain numbered list, most viral first. No commentary.";
+    "Return them as a plain numbered list, most viral first. No commentary.");
   const user = `Extract ${opts.count} quotes, each under ${opts.max} characters:\n\n${input}`;
 
   process.stderr.write("quotemine: mining…\n");

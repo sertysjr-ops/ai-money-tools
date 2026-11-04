@@ -17,6 +17,7 @@ const fs = require("fs");
 const path = require("path");
 const { chat } = require("../../lib/ollama");
 const { globals } = require("../../lib/args");
+const { promptFor } = require("../../lib/config");
 
 function parseArgs(argv) {
   const opts = {
@@ -155,13 +156,13 @@ async function main() {
   }
 
   const title = opts.title || "Frequently asked questions";
-  const system =
+  const system = promptFor("faqforge",
     "You write FAQ pages. Given source material, you anticipate the exact " +
     "questions a real user would ask and answer them clearly and completely. " +
     "Answers are 2-4 sentences, plain prose, no markdown formatting. " +
     "Return exactly the requested number of Q&A pairs in EXACTLY this format " +
     "(no preamble, no commentary):\n\n" +
-    "Q: <question>\nA: <answer>\n\nQ: <question>\nA: <answer>";
+    "Q: <question>\nA: <answer>\n\nQ: <question>\nA: <answer>");
 
   const user =
     `Write ${opts.count} FAQ pairs ${STYLE_HINTS[opts.style] || STYLE_HINTS.docs}.` +

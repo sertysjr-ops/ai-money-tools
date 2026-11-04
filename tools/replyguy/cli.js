@@ -18,6 +18,7 @@
 const fs = require("fs");
 const { chat } = require("../../lib/ollama");
 const { globals } = require("../../lib/args");
+const { promptFor } = require("../../lib/config");
 
 function parseArgs(argv) {
   const opts = { count: 4, tone: null, stance: null, short: false, context: null, file: null };
@@ -55,11 +56,11 @@ async function main() {
   const tones = opts.tone ? [opts.tone] : ["witty", "supportive", "contrarian", "expert"];
   const perTone = Math.max(1, Math.ceil(opts.count / tones.length));
 
-  const system =
+  const system = promptFor("replyguy",
     "You write replies to social media posts that get noticed. " +
     "No 'Great post!' filler, no sycophancy, no emoji spam. " +
     "Every reply adds value: a sharp observation, a useful addition, a respectful challenge, " +
-    "or a funny angle. Sound like a human, not a brand.";
+    "or a funny angle. Sound like a human, not a brand.");
 
   const rules = [
     `Post to reply to:\n${post}`,

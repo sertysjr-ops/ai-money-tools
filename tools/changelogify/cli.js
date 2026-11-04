@@ -18,6 +18,7 @@ const { execSync } = require("child_process");
 const fs = require("fs");
 const { chat } = require("../../lib/ollama");
 const { globals } = require("../../lib/args");
+const { promptFor } = require("../../lib/config");
 
 function parseArgs(argv) {
   const opts = { range: null, version: null, style: "detailed", raw: false, out: null };
@@ -98,11 +99,11 @@ async function aiNotes(version, groups, style) {
     hype: "Write like a launch post — energetic, benefit-first, emoji welcome.",
   }[style] || "Explain what changed and why it matters to users.";
 
-  const system =
+  const system = promptFor("changelogify",
     "You write release notes for software products. " +
     "Turn raw commit lists into user-facing notes. " +
     "Skip internal refactors unless user-visible. Never invent features not in the commits. " +
-    styleHint;
+    styleHint);
 
   return chat(system, `Release ${version}\n\nCommits:\n${summary}`, {
     temperature: 0.4,

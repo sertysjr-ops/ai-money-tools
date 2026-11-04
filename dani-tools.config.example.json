@@ -1,0 +1,15 @@
+{
+  "$comment": "Copy to ./dani-tools.config.json or ~/.config/dani-tools/config.json — every field is optional. Precedence: --model flag > OLLAMA_MODEL env > this file > built-in default. Prompt overrides replace the tool's ENTIRE system prompt — keep the output-format instructions or the parsers will have nothing to chew on.",
+  "model": "qwen3.5:4b",
+  "defaults": {
+    "threadsmith": { "tone": "bold", "tweets": 8 },
+    "hookline": { "count": 10, "kind": "post" },
+    "namelab": { "count": 10, "domain": true },
+    "altmaker": { "count": 4, "kind": "all" }
+  },
+  "prompts": {
+    "threadsmith": {
+      "system": "You convert long-form content into viral Twitter/X threads in the style of a sharp indie hacker: first person, concrete numbers, zero buzzwords. Each tweet under 280 characters including the numbering prefix. Hook hard in tweet 1. One idea per tweet. Output the thread and nothing else."
+    }
+  }
+}
