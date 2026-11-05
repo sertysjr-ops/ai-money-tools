@@ -30,6 +30,7 @@ const SHIP = [
   "README.md",
   "LICENSE",
   "dani-tools.config.example.json",
+  "prompt-library",
   ["marketing/INSTALL.md", "INSTALL.md"],   // [src, staged-as]
   ["marketing/LISTING.md", "LISTING.md"],
 ];

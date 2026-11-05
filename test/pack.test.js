@@ -53,6 +53,12 @@ for (const must of [
   "dani-tools/INSTALL.md",
   "dani-tools/LISTING.md",
   "dani-tools/dani-tools.config.example.json",
+  "dani-tools/prompt-library/README.md",
+  "dani-tools/prompt-library/viral-creator.config.json",
+  "dani-tools/prompt-library/indie-hacker.config.json",
+  "dani-tools/prompt-library/agency-pro.config.json",
+  "dani-tools/prompt-library/technical-founder.config.json",
+  "dani-tools/prompt-library/ghostwriter-li.config.json",
 ]) {
   check(`ships ${must}`, names.has(must));
 }

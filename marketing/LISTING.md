@@ -35,6 +35,14 @@ override via one config file. Generic AI output sounds generic — make the
 tools sound like YOU. Your flags, your prompts, your voice, saved once and
 applied everywhere.
 
+**Bonus: 5 pro persona packs included.** Don't want to write your own
+prompts? Point one env var at a pack and all 8 tools instantly speak that
+voice: 🔥 Viral Creator (X growth), 🛠 Indie Hacker (build-in-public),
+💼 Agency Pro (client-safe polish), ⚙️ Technical Founder (dev-audience
+precision), and 🎩 Ghostwriter LI (LinkedIn thought leadership). Each pack
+also tunes the flag defaults — 40 hand-written prompts, battle-tested
+against the parsers.
+
 **Bonus: automation-ready.** A built-in local JSON API (with batch mode)
 plugs all 8 tools into n8n, Make, or Zapier as webhook steps. Your content
 pipeline, on autopilot, still offline.
@@ -43,7 +51,8 @@ pipeline, on autopilot, still offline.
 guide included). Mac/Linux/Windows.
 
 **What's in the zip:** all 8 tools, the dispatcher, the automation server,
-config example, zsh completions, install guide, MIT license.
+5 persona prompt packs, config example, zsh completions, install guide,
+MIT license.
 
 ## Price
 

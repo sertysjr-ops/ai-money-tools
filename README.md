@@ -174,6 +174,26 @@ inspect what any tool resolved with:
 threadsmith --print-config
 ```
 
+### Prompt library (5 persona packs)
+
+`prompt-library/` ships ready-made configs that re-voice **all 8 tools**
+with one coherent persona — 40 hand-written prompts, parser-safe:
+
+| Pack | Voice |
+|---|---|
+| `viral-creator` | X growth — bold claims, open loops, pattern interrupts |
+| `indie-hacker` | build-in-public — first person, real numbers, zero buzzwords |
+| `agency-pro` | client-safe polish — benefit-led, brand-ready |
+| `technical-founder` | dev audience — precise, no fluff, benchmarks over adjectives |
+| `ghostwriter-li` | LinkedIn thought leadership — story loops, earned insights |
+
+```bash
+DANI_TOOLS_CONFIG=prompt-library/viral-creator.config.json \
+  dani-tools threadsmith article.txt
+```
+
+See `prompt-library/README.md` for per-pack details and mixing rules.
+
 ## Global flags
 
 Every tool accepts:
@@ -230,8 +250,8 @@ npm run pack    # → dist/dani-tools-<version>.zip
 ```
 
 Stages exactly what a customer needs (8 CLIs, dispatcher, libs, automation
-server, config example, completions, LICENSE, INSTALL.md, LISTING.md) and
-zips it. `marketing/LISTING.md` is the paste-ready Gumroad product page.
+server, 5 persona packs, config example, completions, LICENSE, INSTALL.md,
+LISTING.md) and zips it. `marketing/LISTING.md` is the paste-ready Gumroad product page.
 `test/pack.test.js` verifies every bin target ships and no source-only
 dirs leak into the artifact.
 
