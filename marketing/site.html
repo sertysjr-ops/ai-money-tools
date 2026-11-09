@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>dani-tools — 8 AI content tools that run 100% offline</title>
+<meta name="description" content="Turn articles into threads, mine quotes, draft replies, write release notes — 8 battle-tested CLIs powered by YOUR local AI model. Pay once, own forever.">
+<style>
+  :root {
+    --bg: #0a0a0f; --panel: #12121a; --line: #23232f;
+    --txt: #e7e7ee; --dim: #8b8b9e;
+    --acc: #a78bfa; --acc2: #22d3ee; --lime: #a3e635; --amber: #fbbf24;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { background: var(--bg); color: var(--txt); font-family: ui-monospace, 'SF Mono', Menlo, monospace; line-height: 1.6; }
+  .wrap { max-width: 960px; margin: 0 auto; padding: 0 24px; }
+  a { color: var(--acc2); }
+
+  /* hero */
+  header { padding: 96px 0 64px; text-align: center; position: relative; overflow: hidden; }
+  header::before { content: ""; position: absolute; inset: -40%; background:
+    radial-gradient(600px 300px at 30% 20%, rgba(167,139,250,.14), transparent),
+    radial-gradient(500px 260px at 75% 30%, rgba(34,211,238,.10), transparent);
+    pointer-events: none; }
+  .pill { display: inline-block; border: 1px solid var(--line); border-radius: 999px;
+    padding: 4px 14px; font-size: 12px; color: var(--dim); background: var(--panel); margin-bottom: 24px; }
+  h1 { font-size: clamp(30px, 5.4vw, 52px); font-weight: 800; letter-spacing: -1.5px; line-height: 1.12; position: relative; }
+  h1 .grad { background: linear-gradient(90deg, var(--acc), var(--acc2)); -webkit-background-clip: text; background-clip: text; color: transparent; }
+  .sub { color: var(--dim); max-width: 620px; margin: 20px auto 0; font-size: 16px; position: relative; }
+  .cta-row { margin-top: 36px; display: flex; gap: 14px; justify-content: center; flex-wrap: wrap; position: relative; }
+  .btn { border-radius: 10px; padding: 13px 26px; font-size: 15px; font-weight: 700; text-decoration: none; font-family: inherit; cursor: pointer; }
+  .btn-primary { background: linear-gradient(90deg, var(--acc), #f0abfc); color: #0a0a0f; border: none; }
+  .btn-ghost { background: var(--panel); color: var(--txt); border: 1px solid var(--line); }
+  .badges { margin-top: 28px; display: flex; gap: 18px; justify-content: center; flex-wrap: wrap; color: var(--dim); font-size: 12.5px; position: relative; }
+  .badges span::before { content: "✓ "; color: var(--lime); }
+
+  /* terminal */
+  .term { background: #0d0d14; border: 1px solid var(--line); border-radius: 14px; overflow: hidden; margin: 72px 0; box-shadow: 0 30px 80px rgba(0,0,0,.5); }
+  .term-bar { display: flex; gap: 7px; padding: 12px 16px; border-bottom: 1px solid var(--line); background: var(--panel); }
+  .term-bar i { width: 11px; height: 11px; border-radius: 50%; display: block; }
+  .term-bar i:nth-child(1) { background: #ff5f57; } .term-bar i:nth-child(2) { background: #febc2e; } .term-bar i:nth-child(3) { background: #28c840; }
+  .term-bar span { margin-left: 10px; color: var(--dim); font-size: 12px; }
+  .term-body { padding: 20px; font-size: 13.5px; min-height: 300px; white-space: pre-wrap; }
+  .term-body .p { color: var(--lime); } .term-body .c { color: var(--dim); }
+  .cursor { display: inline-block; width: 8px; height: 15px; background: var(--lime); vertical-align: -2px; animation: blink 1s steps(1) infinite; }
+  @keyframes blink { 50% { opacity: 0; } }
+
+  /* sections */
+  section { padding: 56px 0; }
+  h2 { font-size: 26px; letter-spacing: -0.5px; margin-bottom: 8px; }
+  h2 .grad { color: var(--acc); }
+  .lead { color: var(--dim); margin-bottom: 32px; max-width: 640px; }
+  .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(270px, 1fr)); gap: 14px; }
+  .card { background: var(--panel); border: 1px solid var(--line); border-radius: 12px; padding: 20px; }
+  .card h3 { font-size: 15px; margin-bottom: 6px; }
+  .card p { color: var(--dim); font-size: 13.5px; }
+  .card code { color: var(--acc2); font-size: 13px; }
+
+  .pack { display: flex; gap: 12px; align-items: flex-start; }
+  .pack .em { font-size: 22px; }
+
+  .install { background: #0d0d14; border: 1px solid var(--line); border-radius: 12px; padding: 22px; font-size: 13.5px; overflow-x: auto; }
+  .install .c { color: var(--dim); }
+  .install .p { color: var(--lime); user-select: none; }
+
+  details { border: 1px solid var(--line); border-radius: 10px; padding: 14px 18px; background: var(--panel); margin-bottom: 10px; }
+  summary { cursor: pointer; font-weight: 600; font-size: 14.5px; }
+  details p { color: var(--dim); font-size: 13.5px; margin-top: 8px; }
+
+  .price { text-align: center; border: 1px solid var(--line); border-radius: 16px; padding: 48px 24px; background:
+    radial-gradient(400px 200px at 50% 0%, rgba(167,139,250,.12), transparent), var(--panel); }
+  .price .amount { font-size: 56px; font-weight: 800; letter-spacing: -2px; }
+  .price .amount small { font-size: 16px; color: var(--dim); font-weight: 400; letter-spacing: 0; }
+
+  footer { border-top: 1px solid var(--line); padding: 32px 0 48px; color: var(--dim); font-size: 12.5px; text-align: center; }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="wrap">
+    <div class="pill">100% offline · no API keys · no subscription</div>
+    <h1>8 AI content tools that run<br><span class="grad">entirely on your machine</span></h1>
+    <p class="sub">Turn articles into threads, mine quotable lines, draft replies, write release notes — powered by the free local model you already have. Pay once, own forever, works on a plane.</p>
+    <div class="cta-row">
+      <a class="btn btn-primary" href="#buy">Get dani-tools — $19</a>
+      <a class="btn btn-ghost" href="#demo">See it work ↓</a>
+    </div>
+    <div class="badges">
+      <span>Node 18+</span><span>Ollama (free)</span><span>MIT licensed</span><span>Mac · Linux · Windows</span>
+    </div>
+  </div>
+</header>
+
+<div class="wrap">
+
+  <!-- DEMO -->
+  <div class="term" id="demo">
+    <div class="term-bar"><i></i><i></i><i></i><span>dani-tools — real output, local qwen3.5</span></div>
+    <div class="term-body" id="termbody"></div>
+  </div>
+
+  <!-- TOOLS -->
+  <section>
+    <h2>Eight tools. <span class="grad">Zero cloud.</span></h2>
+    <p class="lead">Each one does a single job well, reads from stdin or a file, and pipes into the rest of your setup like a proper Unix citizen.</p>
+    <div class="grid">
+      <div class="card"><h3>🧵 <code>threadsmith</code></h3><p>Long-form text → ready-to-post Twitter/X thread. Numbered, sized, hooked.</p></div>
+      <div class="card"><h3>⛏️ <code>quotemine</code></h3><p>The 10 most screenshot-worthy lines from any text, ranked.</p></div>
+      <div class="card"><h3>💬 <code>replyguy</code></h3><p>Multi-tone reply drafts — witty, professional, agree, disagree.</p></div>
+      <div class="card"><h3>📋 <code>changelogify</code></h3><p>Git history → release notes your users actually read.</p></div>
+      <div class="card"><h3>🪝 <code>hookline</code></h3><p>Scroll-stopping cold-open hooks for any topic.</p></div>
+      <div class="card"><h3>🏷️ <code>namelab</code></h3><p>Product names with domain hints — startup, premium, playful, technical.</p></div>
+      <div class="card"><h3>❓ <code>faqforge</code></h3><p>Your docs → a self-contained, zero-JS FAQ page.</p></div>
+      <div class="card"><h3>🅰️ <code>altmaker</code></h3><p>A/B viral angles: same idea, five framings, with the "why".</p></div>
+    </div>
+  </section>
+
+  <!-- PERSONA PACKS -->
+  <section>
+    <h2>Make it sound like <span class="grad">you</span></h2>
+    <p class="lead">Generic AI output sounds generic. One config file overrides every tool's system prompt — your flags, your prompts, your voice, saved once. Don't want to write prompts? Five pro persona packs ship in the box:</p>
+    <div class="grid">
+      <div class="card pack"><span class="em">🔥</span><div><h3>Viral Creator</h3><p>X growth voice — bold claims, open loops.</p></div></div>
+      <div class="card pack"><span class="em">🛠</span><div><h3>Indie Hacker</h3><p>Build-in-public candor, numbers first.</p></div></div>
+      <div class="card pack"><span class="em">💼</span><div><h3>Agency Pro</h3><p>Client-safe polish, zero cringe.</p></div></div>
+      <div class="card pack"><span class="em">⚙️</span><div><h3>Technical Founder</h3><p>Dev-audience precision, no fluff.</p></div></div>
+      <div class="card pack"><span class="em">🎩</span><div><h3>Ghostwriter LI</h3><p>LinkedIn thought-leadership cadence.</p></div></div>
+      <div class="card pack"><span class="em">🔌</span><div><h3>Automation-ready</h3><p>Built-in local JSON API with batch mode — plug into n8n, Make, Zapier. Still offline.</p></div></div>
+    </div>
+  </section>
+
+  <!-- INSTALL -->
+  <section>
+    <h2>Five-minute setup</h2>
+    <p class="lead">If your machine runs Ollama, it works. That's the whole requirement list.</p>
+    <div class="install"><span class="c"># 1. install Ollama + one free model (once)</span>
+<span class="p">$</span> brew install ollama && ollama pull qwen3.5:4b
+
+<span class="c"># 2. unzip dani-tools, install globally</span>
+<span class="p">$</span> unzip dani-tools-1.2.0.zip && cd dani-tools && npm link
+
+<span class="c"># 3. go</span>
+<span class="p">$</span> cat blogpost.md | threadsmith --tweets 6
+<span class="p">$</span> dani-tools hookline "my niche topic" --count 5</div>
+  </section>
+
+  <!-- FAQ -->
+  <section>
+    <h2>FAQ</h2>
+    <p class="lead"></p>
+    <details><summary>Do I need an OpenAI key?</summary><p>No. Everything runs on a free local model via Ollama. Total ongoing cost: $0.</p></details>
+    <details><summary>Is my text sent anywhere?</summary><p>No. It never leaves your machine. There's no telemetry, no analytics, no phone-home of any kind.</p></details>
+    <details><summary>What if I don't like it?</summary><p>Gumroad's standard refund window applies — but run <code>npm test</code> after install; if your machine runs Ollama, it works.</p></details>
+    <details><summary>Can I use it commercially?</summary><p>MIT licensed. Yes.</p></details>
+  </section>
+
+  <!-- PRICE -->
+  <section id="buy">
+    <div class="price">
+      <div class="amount">$19<small> once · lifetime updates via re-download</small></div>
+      <p class="sub" style="margin:14px auto 28px;">All 8 tools · dispatcher · automation server · 5 persona packs · zsh completions · install guide · MIT license.</p>
+      <a class="btn btn-primary" href="https://gumroad.com/" target="_blank" rel="noopener">Buy on Gumroad →</a>
+      <p style="color:var(--dim);font-size:12px;margin-top:16px;">launch price — commercial/team tier coming later</p>
+    </div>
+  </section>
+
+</div>
+
+<footer>
+  <div class="wrap">
+    dani-tools · zero-dependency AI CLIs · runs on qwen3.5 via Ollama · MIT<br>
+    terminal output above captured live from the real tools
+  </div>
+</footer>
+
+<script>
+/* Terminal replay — the lines below are REAL captured output from the
+   tools (hookline + threadsmith on qwen3.5:4b), replayed with a
+   typewriter effect. */
+const SCRIPT = [
+  { t: "cmd",  s: 'echo "building apps with local AI" | hookline --count 3' },
+  { t: "out",  s: "1. Your app won't scale if it still relies on APIs that cost you $0.02 per request." },
+  { t: "out",  s: "2. Most developers are hallucinating features because they're trying to build locally without a roadmap." },
+  { t: "out",  s: "3. Stop copying models and start training on your own data—here's how to get 40% less latency in seconds." },
+  { t: "gap" },
+  { t: "cmd",  s: "cat story.md | threadsmith --tweets 4" },
+  { t: "out",  s: "1/ Stop coding if you haven't posted yet. I spent 6 months building a SaaS nobody wanted… the mistake was building in silence." },
+  { t: "out",  s: "2/ When I finally started sharing progress publicly, feedback flooded in daily. My roadmap wrote itself." },
+  { t: "out",  s: "3/ The first paying customer didn't come from ads. He came from a reply to one of my posts." },
+  { t: "out",  s: "4/ Build in public isn't marketing. It's product development with witnesses watching you build it." },
+];
+
+const body = document.getElementById("termbody");
+const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
+
+async function typeCmd(text) {
+  const line = document.createElement("div");
+  line.innerHTML = '<span class="p">$ </span>';
+  const span = document.createElement("span");
+  line.appendChild(span);
+  body.appendChild(line);
+  for (const ch of text) { span.textContent += ch; await sleep(18 + Math.random() * 30); }
+  await sleep(350);
+}
+
+async function run() {
+  while (true) {
+    body.innerHTML = "";
+    for (const step of SCRIPT) {
+      if (step.t === "gap") { await sleep(600); continue; }
+      if (step.t === "cmd") { await typeCmd(step.s); continue; }
+      const d = document.createElement("div");
+      d.textContent = step.s;
+      body.appendChild(d);
+      await sleep(140);
+    }
+    const c = document.createElement("span");
+    c.className = "cursor";
+    body.appendChild(c);
+    await sleep(6000); // hold the final frame, then replay
+  }
+}
+run();
+</script>
+</body>
+</html>
