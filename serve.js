@@ -43,6 +43,7 @@ const TOOLS = {
   hookline: { count: "value", kind: "value", voice: "value" },
   namelab: { count: "value", style: "value", domain: "value", "no-hints": "bool" },
   faqforge: { style: "value", count: "value", title: "value" }, // no --out: stdout only
+  pitchforge: { channel: "value", target: "value", count: "value", followup: "bool" },
 };
 
 function runTool(tool, input, flags) {

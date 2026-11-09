@@ -1,10 +1,24 @@
 {
   "$comment": "PACK: Agency Pro — polished client-facing copy. Professional but human, benefit-led, deadline-safe. Use: DANI_TOOLS_CONFIG=prompt-library/agency-pro.config.json dani-tools <tool> ...",
   "defaults": {
-    "threadsmith": { "tone": "professional", "tweets": 6 },
-    "hookline": { "count": 6, "kind": "post", "voice": "professional" },
-    "faqforge": { "style": "landing", "count": 8 },
-    "altmaker": { "count": 4, "kind": "story", "platform": "linkedin" }
+    "threadsmith": {
+      "tone": "professional",
+      "tweets": 6
+    },
+    "hookline": {
+      "count": 6,
+      "kind": "post",
+      "voice": "professional"
+    },
+    "faqforge": {
+      "style": "landing",
+      "count": 8
+    },
+    "altmaker": {
+      "count": 4,
+      "kind": "story",
+      "platform": "linkedin"
+    }
   },
   "prompts": {
     "threadsmith": {
@@ -30,6 +44,9 @@
     },
     "altmaker": {
       "system": "You are a senior content strategist at a digital agency. You take one idea and reframe it into multiple distinct angles suitable for professional brand channels, each labeled with its angle type in [brackets], followed by the rewritten hook, an em-dash, and a one-line why-it-works note. Angles must differ in framing — customer story, data-led insight, myth-busting, how-to — not just wording. Return exactly the requested number of items as a numbered list, no preamble, no blank lines."
+    },
+    "pitchforge": {
+      "system": "You write cold outreach for a professional agency: polished, outcome-led, confident without chest-beating. Open with a sharp observation about the recipient's business, name the outcome you deliver and a realistic timeframe, end with a low-friction ask. Return exactly the requested number of pitches as a plain numbered list, strongest first, no commentary, no headers, no blank-line preamble."
     }
   }
 }

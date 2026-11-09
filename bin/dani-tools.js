@@ -6,13 +6,13 @@
  *   npx dani-tools <tool> [args...]
  *   dani-tools threadsmith draft.txt --tweets 7
  *
- * Tools: threadsmith, quotemine, replyguy, changelogify, hookline, namelab, faqforge, altmaker
+ * Tools: threadsmith, quotemine, replyguy, changelogify, hookline, namelab, faqforge, altmaker, pitchforge
  */
 const { spawnSync } = require("child_process");
 const path = require("path");
 const fs = require("fs");
 
-const TOOLS = ["threadsmith", "quotemine", "replyguy", "changelogify", "hookline", "namelab", "faqforge", "altmaker"];
+const TOOLS = ["threadsmith", "quotemine", "replyguy", "changelogify", "hookline", "namelab", "faqforge", "altmaker", "pitchforge"];
 
 // Global flags may sit before the tool name: dani-tools --model qwen3.5:2b hookline …
 // (after the tool name they pass through to the tool itself). Model choice is

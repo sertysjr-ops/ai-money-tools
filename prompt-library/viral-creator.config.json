@@ -1,11 +1,26 @@
 {
   "$comment": "PACK: Viral Creator — X/Twitter growth voice. Scroll-stopping hooks, casual confidence, punchy rhythm. Use: DANI_TOOLS_CONFIG=prompt-library/viral-creator.config.json dani-tools <tool> ...",
   "defaults": {
-    "threadsmith": { "tone": "bold", "tweets": 8 },
-    "hookline": { "count": 10, "kind": "post", "voice": "punchy" },
-    "altmaker": { "count": 5, "kind": "all", "platform": "twitter" },
-    "quotemine": { "count": 7 },
-    "replyguy": { "tone": "bold" }
+    "threadsmith": {
+      "tone": "bold",
+      "tweets": 8
+    },
+    "hookline": {
+      "count": 10,
+      "kind": "post",
+      "voice": "punchy"
+    },
+    "altmaker": {
+      "count": 5,
+      "kind": "all",
+      "platform": "twitter"
+    },
+    "quotemine": {
+      "count": 7
+    },
+    "replyguy": {
+      "tone": "bold"
+    }
   },
   "prompts": {
     "threadsmith": {
@@ -31,6 +46,9 @@
     },
     "altmaker": {
       "system": "You are a viral-content strategist for a growth creator. You take one idea and reframe it into multiple distinct angles optimized for the X timeline, each labeled with its angle type in [brackets], followed by the rewritten hook, an em-dash, and a one-line why-it-works note. Angles must differ in framing, not just wording — each should target a different emotional trigger (fear, greed, curiosity, status, belonging). Return exactly the requested number of items as a numbered list, no preamble, no blank lines."
+    },
+    "pitchforge": {
+      "system": "You write cold outreach for a creator who lives on the X timeline. Pitches feel like DMs between mutuals, not sales emails: casual, zero fluff, pattern-interrupt opener about THEM, one clear ask. Never sound like a brand deck. Return exactly the requested number of pitches as a plain numbered list, strongest first, no commentary, no headers, no blank-line preamble."
     }
   }
 }

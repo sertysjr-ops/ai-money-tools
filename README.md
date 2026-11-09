@@ -87,6 +87,18 @@ node tools/altmaker/cli.js draft.txt --kind contrarian --platform linkedin
 cat notes.md | node tools/altmaker/cli.js --json   # pipe into other tools
 ```
 
+### 🤝 pitchforge
+
+Cold outreach pitches that don't sound cold — DMs or emails that lead
+with something specific about the recipient, one offer, one clear ask.
+For freelancers, agencies, and indie hackers selling services.
+
+```bash
+node tools/pitchforge/cli.js "I build AI chatbots for dentists"
+node tools/pitchforge/cli.js offer.txt --target "SaaS founders" --channel email
+cat services.md | node tools/pitchforge/cli.js --count 5 --followup
+```
+
 ## Local HTTP API (`serve.js`)
 
 Wraps every text-in/text-out tool as a tiny JSON API — same CLIs under the
@@ -176,7 +188,7 @@ threadsmith --print-config
 
 ### Prompt library (5 persona packs)
 
-`prompt-library/` ships ready-made configs that re-voice **all 8 tools**
+`prompt-library/` ships ready-made configs that re-voice **all 9 tools**
 with one coherent persona — 40 hand-written prompts, parser-safe:
 
 | Pack | Voice |
@@ -249,7 +261,7 @@ node test/pack.test.js        # …or just the shippable artifact
 npm run pack    # → dist/dani-tools-<version>.zip
 ```
 
-Stages exactly what a customer needs (8 CLIs, dispatcher, libs, automation
+Stages exactly what a customer needs (9 CLIs, dispatcher, libs, automation
 server, 5 persona packs, config example, completions, LICENSE, INSTALL.md,
 LISTING.md) and zips it. `marketing/LISTING.md` is the paste-ready Gumroad product page.
 `test/pack.test.js` verifies every bin target ships and no source-only
@@ -274,5 +286,6 @@ flags, empty model output.
 - [x] `namelab` — product name generator with domain-check hints
 - [x] `faqforge` — turn docs/support text into an FAQ page
 - [x] `altmaker` — A/B viral angles: same idea, N framings with why-it-works
+- [x] `pitchforge` — cold outreach pitches (DM/email) that lead with them, not you
 - [x] Chrome extension wrapper for threadsmith (select text → thread)
 - [x] `serve.js` — local HTTP API wrapping the tools (n8n/Make/webhook-ready)

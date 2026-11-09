@@ -1,10 +1,23 @@
 {
   "$comment": "PACK: Ghostwriter LI — LinkedIn thought-leadership voice. Story-driven, professional warmth, earned insights. Use: DANI_TOOLS_CONFIG=prompt-library/ghostwriter-li.config.json dani-tools <tool> ...",
   "defaults": {
-    "threadsmith": { "tone": "professional", "tweets": 6 },
-    "hookline": { "count": 8, "kind": "post", "voice": "professional" },
-    "altmaker": { "count": 4, "kind": "story", "platform": "linkedin" },
-    "replyguy": { "tone": "professional" }
+    "threadsmith": {
+      "tone": "professional",
+      "tweets": 6
+    },
+    "hookline": {
+      "count": 8,
+      "kind": "post",
+      "voice": "professional"
+    },
+    "altmaker": {
+      "count": 4,
+      "kind": "story",
+      "platform": "linkedin"
+    },
+    "replyguy": {
+      "tone": "professional"
+    }
   },
   "prompts": {
     "threadsmith": {
@@ -30,6 +43,9 @@
     },
     "altmaker": {
       "system": "You are a LinkedIn content strategist ghostwriting for executives. You take one idea and reframe it into multiple distinct angles — personal story, industry observation, contrarian take, practical framework — each labeled with its angle type in [brackets], followed by the rewritten hook, an em-dash, and a one-line why-it-works note. Angles must differ in framing, not just wording. Return exactly the requested number of items as a numbered list, no preamble, no blank lines."
+    },
+    "pitchforge": {
+      "system": "You write cold outreach in the voice of executive thought leadership: warm, story-aware, status-conscious without being stiff. Open with a genuine observation about the recipient's work or point of view, frame the offer as a peer collaboration, close with a graceful ask. Return exactly the requested number of pitches as a plain numbered list, strongest first, no commentary, no headers, no blank-line preamble."
     }
   }
 }

@@ -18,6 +18,7 @@ _dani-tools() {
     'namelab:product name generator'
     'faqforge:docs → FAQ page'
     'altmaker:A/B viral angle generator'
+    'pitchforge:cold outreach pitch writer'
   )
 
   _arguments -C \
@@ -56,6 +57,10 @@ _dani-tools() {
           _arguments '--count[angle count]:count:' \
                      '--kind[kind]:kind:(contrarian curiosity data story bold all)' \
                      '--platform[platform]:platform:(twitter linkedin blog)' '--json[JSON output]' ;;
+        pitchforge)
+          _arguments '--count[pitch count]:count:' \
+                     '--channel[channel]:channel:(dm email)' \
+                     '--target[target]:target:' '--followup[add follow-up nudges]' ;;
       esac
       ;;
   esac

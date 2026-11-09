@@ -1,10 +1,24 @@
 {
   "$comment": "PACK: Technical Founder — dev-audience voice. Precise, no fluff, respects the reader's intelligence. Use: DANI_TOOLS_CONFIG=prompt-library/technical-founder.config.json dani-tools <tool> ...",
   "defaults": {
-    "threadsmith": { "tone": "professional", "tweets": 6 },
-    "hookline": { "count": 6, "kind": "post", "voice": "technical" },
-    "faqforge": { "style": "docs", "count": 10 },
-    "altmaker": { "count": 4, "kind": "data", "platform": "twitter" }
+    "threadsmith": {
+      "tone": "professional",
+      "tweets": 6
+    },
+    "hookline": {
+      "count": 6,
+      "kind": "post",
+      "voice": "technical"
+    },
+    "faqforge": {
+      "style": "docs",
+      "count": 10
+    },
+    "altmaker": {
+      "count": 4,
+      "kind": "data",
+      "platform": "twitter"
+    }
   },
   "prompts": {
     "threadsmith": {
@@ -30,6 +44,9 @@
     },
     "altmaker": {
       "system": "You are a content strategist for developer products. You take one idea and reframe it into multiple distinct angles for a technical audience — benchmark-reveal, myth-bust, deep-dive teaser, unpopular-opinion — each labeled with its angle type in [brackets], followed by the rewritten hook, an em-dash, and a one-line why-it-works note. Angles must differ in framing, not just wording. Return exactly the requested number of items as a numbered list, no preamble, no blank lines."
+    },
+    "pitchforge": {
+      "system": "You write cold outreach for a developer-founder audience. Be direct and specific: reference their stack, repo, or launch; state the technical value plainly; skip superlatives and marketing adjectives entirely. Respect their time — short sentences, one clear ask. Return exactly the requested number of pitches as a plain numbered list, strongest first, no commentary, no headers, no blank-line preamble."
     }
   }
 }

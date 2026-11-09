@@ -80,6 +80,11 @@ const CASES = [
     args: ["offline AI tools are the future of indie hacking", "--count", "3", "--kind", "all"],
     minChars: 80,
   },
+  {
+    tool: "pitchforge",
+    args: ["I build lightning-fast landing pages for local businesses", "--count", "2", "--channel", "dm"],
+    minChars: 80,
+  },
 ];
 
 const TIMEOUT_MS = 120000;

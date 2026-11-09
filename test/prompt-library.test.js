@@ -17,7 +17,7 @@ const ROOT = path.join(__dirname, "..");
 const LIB = path.join(ROOT, "prompt-library");
 const KNOWN_TOOLS = [
   "threadsmith", "quotemine", "replyguy", "changelogify",
-  "hookline", "namelab", "faqforge", "altmaker",
+  "hookline", "namelab", "faqforge", "altmaker", "pitchforge",
 ];
 
 // the output-contract fingerprints each tool's parser relies on
@@ -30,6 +30,7 @@ const CONTRACTS = {
   altmaker: [/\[brackets\]/, /em-dash/, /numbered list/i],
   changelogify: [/never invent features/i],
   replyguy: [/filler/, /sycophancy/],
+  pitchforge: [/numbered list/i, /no commentary/i],
 };
 
 let checks = 0;

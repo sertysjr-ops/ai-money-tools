@@ -4,12 +4,12 @@
 
 ## Title
 
-**dani-tools — 8 AI content tools that run 100% offline (no API keys, no subscriptions)**
+**dani-tools — 9 AI content tools that run 100% offline (no API keys, no subscriptions)**
 
 ## Subtitle / short description
 
 Turn articles into threads, mine quotes, draft replies, write release notes —
-8 battle-tested CLIs powered by YOUR local AI model. Pay once, own forever,
+9 battle-tested CLIs powered by YOUR local AI model. Pay once, own forever,
 works on a plane.
 
 ## Long description
@@ -29,6 +29,7 @@ No telemetry. No subscription — ever.
 - 🏷️ **namelab** — product names with domain hints (startup/premium/playful/technical)
 - ❓ **faqforge** — your docs → a self-contained, zero-JS FAQ page
 - 🅰️ **altmaker** — A/B viral angles: same idea, 5 different framings with the "why"
+- 🤝 **pitchforge** — cold outreach (DM/email) that leads with them, not you
 
 **The creator tier difference:** every tool accepts a full system-prompt
 override via one config file. Generic AI output sounds generic — make the
@@ -36,7 +37,7 @@ tools sound like YOU. Your flags, your prompts, your voice, saved once and
 applied everywhere.
 
 **Bonus: 5 pro persona packs included.** Don't want to write your own
-prompts? Point one env var at a pack and all 8 tools instantly speak that
+prompts? Point one env var at a pack and all 9 tools instantly speak that
 voice: 🔥 Viral Creator (X growth), 🛠 Indie Hacker (build-in-public),
 💼 Agency Pro (client-safe polish), ⚙️ Technical Founder (dev-audience
 precision), and 🎩 Ghostwriter LI (LinkedIn thought leadership). Each pack
@@ -44,13 +45,13 @@ also tunes the flag defaults — 40 hand-written prompts, battle-tested
 against the parsers.
 
 **Bonus: automation-ready.** A built-in local JSON API (with batch mode)
-plugs all 8 tools into n8n, Make, or Zapier as webhook steps. Your content
+plugs all 9 tools into n8n, Make, or Zapier as webhook steps. Your content
 pipeline, on autopilot, still offline.
 
 **Requirements:** Node.js 18+, Ollama with one free model (setup in 5 min,
 guide included). Mac/Linux/Windows.
 
-**What's in the zip:** all 8 tools, the dispatcher, the automation server,
+**What's in the zip:** all 9 tools, the dispatcher, the automation server,
 5 persona prompt packs, config example, zsh completions, install guide,
 MIT license.
 

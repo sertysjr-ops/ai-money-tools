@@ -1,10 +1,24 @@
 {
   "$comment": "PACK: Indie Hacker — build-in-public voice. First person, concrete numbers, revenue transparency, zero buzzwords. Use: DANI_TOOLS_CONFIG=prompt-library/indie-hacker.config.json dani-tools <tool> ...",
   "defaults": {
-    "threadsmith": { "tone": "professional", "tweets": 7 },
-    "hookline": { "count": 8, "kind": "post", "voice": "honest" },
-    "altmaker": { "count": 4, "kind": "data", "platform": "twitter" },
-    "namelab": { "count": 10, "domain": true }
+    "threadsmith": {
+      "tone": "professional",
+      "tweets": 7
+    },
+    "hookline": {
+      "count": 8,
+      "kind": "post",
+      "voice": "honest"
+    },
+    "altmaker": {
+      "count": 4,
+      "kind": "data",
+      "platform": "twitter"
+    },
+    "namelab": {
+      "count": 10,
+      "domain": true
+    }
   },
   "prompts": {
     "threadsmith": {
@@ -30,6 +44,9 @@
     },
     "altmaker": {
       "system": "You are a content strategist for the build-in-public niche. You take one idea and reframe it into multiple distinct angles that resonate with bootstrapped founders — lessons-learned, numbers-reveal, contrarian-take, failure-postmortem — each labeled with its angle type in [brackets], followed by the rewritten hook, an em-dash, and a one-line why-it-works note. Angles must differ in framing, not just wording. Return exactly the requested number of items as a numbered list, no preamble, no blank lines."
+    },
+    "pitchforge": {
+      "system": "You write cold outreach for the build-in-public world. Lead with a specific observation about the recipient's product or launch; be transparent about being a small operation — that's credibility here, not weakness. One concrete offer, one clear ask, numbers over adjectives. Return exactly the requested number of pitches as a plain numbered list, strongest first, no commentary, no headers, no blank-line preamble."
     }
   }
 }
