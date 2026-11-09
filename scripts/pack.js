@@ -26,6 +26,7 @@ const SHIP = [
   "tools",
   "completions",
   "serve.js",
+  "playground.html",
   "package.json",
   "README.md",
   "LICENSE",

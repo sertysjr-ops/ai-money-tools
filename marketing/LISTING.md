@@ -48,12 +48,16 @@ against the parsers.
 plugs all 9 tools into n8n, Make, or Zapier as webhook steps. Your content
 pipeline, on autopilot, still offline.
 
+**Bonus: browser playground.** Don't love terminals? Start the server and
+open http://127.0.0.1:7890 — a dark, zero-setup web UI with a tool picker,
+per-tool flag forms, and a copy button. Same tools, same local model.
+
 **Requirements:** Node.js 18+, Ollama with one free model (setup in 5 min,
 guide included). Mac/Linux/Windows.
 
-**What's in the zip:** all 9 tools, the dispatcher, the automation server,
-5 persona prompt packs, config example, zsh completions, install guide,
-MIT license.
+**What's in the zip:** all 9 tools, the dispatcher, the automation server
++ browser playground, 5 persona prompt packs, config example, zsh
+completions, install guide, MIT license.
 
 ## Price
 

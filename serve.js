@@ -8,7 +8,9 @@
  * Make, or any webhook that can POST JSON.
  *
  * Endpoints:
+ *   GET  /           → playground.html — try every tool in the browser
  *   GET  /api/health → { ok, model, tools: [...] }
+ *   GET  /api/tools  → { ok, tools: [{ name, tagline, flags: [{flag,kind}] }] }
  *   POST /api/run    → { tool, input, flags? } → { ok, tool, output, tookMs }
  *                      flags is an object of CLI flags without the dashes,
  *                      e.g. { "tone": "bold", "tweets": 8, "no-numbers": true }
@@ -82,6 +84,42 @@ function runTool(tool, input, flags) {
   });
 }
 
+// GET /api/tools metadata: taglines come from each tool's cli.js docblock
+// (same convention as bin/dani-tools.js: " * <tool> — <tagline>"), so the
+// playground/dispatcher/API never drift from the CLIs.
+const fs = require("fs");
+function toolTagline(tool) {
+  try {
+    const first = fs
+      .readFileSync(path.join(__dirname, "tools", tool, "cli.js"), "utf8")
+      .split("\n")
+      .find((l) => l.startsWith(" * " + tool));
+    return first ? first.replace(/^ \* \S+ — /, "").trim() : "";
+  } catch {
+    return "";
+  }
+}
+
+// The playground is a static file, read once at boot. GET / and
+// /playground.html both serve it — same-origin, so no CORS needed.
+let playgroundHtml = null;
+function getPlayground() {
+  if (playgroundHtml === null) {
+    try {
+      playgroundHtml = fs.readFileSync(
+        path.join(__dirname, "playground.html"), "utf8");
+    } catch {
+      playgroundHtml = "";
+    }
+  }
+  return playgroundHtml;
+}
+
+function sendHtml(res, html) {
+  res.writeHead(200, { "Content-Type": "text/html; charset=utf-8" });
+  res.end(html);
+}
+
 function send(res, code, obj) {
   const body = JSON.stringify(obj);
   res.writeHead(code, {
@@ -99,6 +137,26 @@ const server = http.createServer(async (req, res) => {
   if (req.method === "GET" && req.url === "/api/health") {
     const { getModel } = require("./lib/ollama");
     return send(res, 200, { ok: true, model: getModel(), tools: Object.keys(TOOLS) });
+  }
+
+  // Tool metadata for UIs (the playground, future frontends): tagline +
+  // flag whitelist with kinds, so a UI can render a real form per tool.
+  if (req.method === "GET" && req.url === "/api/tools") {
+    return send(res, 200, {
+      ok: true,
+      tools: Object.entries(TOOLS).map(([name, flags]) => ({
+        name,
+        tagline: toolTagline(name),
+        flags: Object.entries(flags).map(([flag, kind]) => ({ flag, kind })),
+      })),
+    });
+  }
+
+  // The playground: try every tool in the browser, zero setup.
+  if (req.method === "GET" && (req.url === "/" || req.url === "/playground.html")) {
+    const html = getPlayground();
+    if (!html) return send(res, 404, { ok: false, error: "playground.html not found" });
+    return sendHtml(res, html);
   }
 
   if (req.method === "POST" && req.url === "/api/run") {
@@ -180,7 +238,7 @@ const server = http.createServer(async (req, res) => {
     return;
   }
 
-  send(res, 404, { ok: false, error: "not found — GET /api/health, POST /api/run, or POST /api/batch" });
+  send(res, 404, { ok: false, error: "not found — GET / (playground), GET /api/health, GET /api/tools, POST /api/run, or POST /api/batch" });
 });
 
 server.listen(PORT, HOST, () => {

@@ -107,6 +107,38 @@ async function main() {
     const h = await get(port, "/api/health");
     check("GET /api/health → ok + tool list", h.body.ok === true && h.body.tools.includes("threadsmith"));
 
+    // 1b. /api/tools: per-tool metadata for UIs (tagline + flag kinds)
+    const tl = await get(port, "/api/tools");
+    check(
+      "GET /api/tools → all tools with tagline + flags",
+      tl.body.ok === true && tl.body.tools.length === 8 &&
+        tl.body.tools.every((t) => t.name && typeof t.tagline === "string" && t.tagline.length > 5 &&
+          Array.isArray(t.flags)),
+      JSON.stringify(tl.body).slice(0, 200)
+    );
+    const ts = tl.body.tools.find((t) => t.name === "threadsmith");
+    check(
+      "threadsmith metadata: tone value-flag + no-numbers bool",
+      ts && ts.flags.some((f) => f.flag === "tone" && f.kind === "value") &&
+        ts.flags.some((f) => f.flag === "no-numbers" && f.kind === "bool")
+    );
+
+    // 1c. the playground is served at / and wired to the API
+    const pgRaw = await new Promise((resolve, reject) => {
+      http.get({ host: "127.0.0.1", port, path: "/", timeout: 5000 }, (res) => {
+        let data = "";
+        res.on("data", (d) => (data += d));
+        res.on("end", () => resolve({ code: res.statusCode, ctype: res.headers["content-type"], body: data }));
+      }).on("error", reject);
+    });
+    check(
+      "GET / serves the playground (html, API-wired)",
+      pgRaw.code === 200 && /text\/html/.test(pgRaw.ctype || "") &&
+        pgRaw.body.includes("dani-tools") && pgRaw.body.includes("/api/run") &&
+        pgRaw.body.includes("/api/tools") && pgRaw.body.includes("buildFlags"),
+      `code=${pgRaw.code}`
+    );
+
     // 2. threadsmith end-to-end (the extension's exact call shape)
     const t0 = Date.now();
     const r = await post(port, "/api/run", {

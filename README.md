@@ -111,7 +111,11 @@ node serve.js        # → http://127.0.0.1:7890  (or DANI_TOOLS_PORT=8000)
 ```
 
 ```
+GET  /           → the playground: try every tool in the browser
+                   (tool picker, per-tool flag forms, copy button)
 GET  /api/health → { ok, model, tools }
+GET  /api/tools  → { ok, tools: [{ name, tagline, flags: [{flag,kind}] }] }
+                   UIs use this to render real forms per tool
 POST /api/run    → { tool, input, flags? } → { ok, tool, output, tookMs }
                    flags: CLI flags without dashes, per-tool whitelist,
                    e.g. { "tone": "bold", "tweets": 8 }

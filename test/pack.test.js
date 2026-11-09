@@ -47,6 +47,7 @@ for (const must of [
   "dani-tools/lib/ollama.js",
   "dani-tools/lib/config.js",
   "dani-tools/serve.js",
+  "dani-tools/playground.html",
   "dani-tools/package.json",
   "dani-tools/README.md",
   "dani-tools/LICENSE",
