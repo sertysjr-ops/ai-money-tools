@@ -1,6 +1,6 @@
 {
   "name": "dani-tools",
-  "version": "1.4.0",
+  "version": "1.4.1",
   "description": "Zero-dependency AI CLI tools powered by a local Ollama model — no API keys, works offline",
   "repository": "sertysjr-ops/ai-money-tools",
   "license": "MIT",
@@ -20,9 +20,11 @@
     "pitchforge": "tools/pitchforge/cli.js"
   },
   "scripts": {
-    "test": "node test/run-all.js && node test/serve.test.js && node test/config.test.js && node test/prompt-library.test.js && node test/pack.test.js",
+    "test": "node test/run-all.js && node test/serve.test.js && node test/config.test.js && node test/prompt-library.test.js && node test/pack.test.js && node scripts/capture-demo.js --check",
     "serve": "node serve.js",
-    "pack": "node scripts/pack.js"
+    "pack": "node scripts/pack.js",
+    "demo": "node scripts/capture-demo.js",
+    "demo:check": "node scripts/capture-demo.js --check"
   },
   "keywords": [
     "ai",
