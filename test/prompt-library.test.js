@@ -17,7 +17,7 @@ const ROOT = path.join(__dirname, "..");
 const LIB = path.join(ROOT, "prompt-library");
 const KNOWN_TOOLS = [
   "threadsmith", "quotemine", "replyguy", "changelogify",
-  "hookline", "namelab", "faqforge", "altmaker", "pitchforge",
+  "hookline", "namelab", "faqforge", "altmaker", "pitchforge", "bioforge",
 ];
 
 // the output-contract fingerprints each tool's parser relies on
@@ -31,6 +31,7 @@ const CONTRACTS = {
   changelogify: [/never invent features/i],
   replyguy: [/filler/, /sycophancy/],
   pitchforge: [/numbered list/i, /no commentary/i],
+  bioforge: [/numbered list/i, /no commentary/i],
 };
 
 let checks = 0;
@@ -80,7 +81,7 @@ for (const file of packs) {
     ok(d && typeof d === "object" && !Array.isArray(d),
       `${file}: defaults.${t} must be a flat object`);
   }
-  console.log(`✅ ${file}: 8/8 personas present, contracts intact`);
+  console.log(`✅ ${file}: ${KNOWN_TOOLS.length}/${KNOWN_TOOLS.length} personas present, contracts intact`);
 }
 
 // --print-config resolves a pack via DANI_TOOLS_CONFIG (zero-Ollama path)

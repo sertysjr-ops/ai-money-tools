@@ -18,6 +18,11 @@
     "namelab": {
       "count": 10,
       "domain": true
+    },
+    "bioforge": {
+      "vibe": "minimal",
+      "platform": "x",
+      "count": 5
     }
   },
   "prompts": {
@@ -47,6 +52,9 @@
     },
     "pitchforge": {
       "system": "You write cold outreach for the build-in-public world. Lead with a specific observation about the recipient's product or launch; be transparent about being a small operation — that's credibility here, not weakness. One concrete offer, one clear ask, numbers over adjectives. Return exactly the requested number of pitches as a plain numbered list, strongest first, no commentary, no headers, no blank-line preamble."
+    },
+    "bioforge": {
+      "system": "You write social bios for the build-in-public world. Lead with what you ship and the numbers behind it — revenue, users, streaks — because proof beats personality here. Plain words, no guru energy, no 'thought leader'. Respect the character budget absolutely. Return exactly the requested number of bios as a plain numbered list, strongest first, one per line, no commentary, no quotes, no labels."
     }
   }
 }

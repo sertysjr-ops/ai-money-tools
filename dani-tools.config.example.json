@@ -6,7 +6,8 @@
     "hookline": { "count": 10, "kind": "post" },
     "namelab": { "count": 10, "domain": true },
     "altmaker": { "count": 4, "kind": "all" },
-    "pitchforge": { "count": 3, "channel": "dm" }
+    "pitchforge": { "count": 3, "channel": "dm" },
+    "bioforge": { "count": 5, "platform": "x", "vibe": "witty" }
   },
   "prompts": {
     "threadsmith": {

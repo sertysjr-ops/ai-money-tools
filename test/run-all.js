@@ -85,6 +85,11 @@ const CASES = [
     args: ["I build lightning-fast landing pages for local businesses", "--count", "2", "--channel", "dm"],
     minChars: 80,
   },
+  {
+    tool: "bioforge",
+    args: ["indie hacker building offline AI tools for creators", "--count", "3", "--platform", "x"],
+    minChars: 60,
+  },
 ];
 
 const TIMEOUT_MS = 120000;

@@ -46,6 +46,7 @@ const TOOLS = {
   namelab: { count: "value", style: "value", domain: "value", "no-hints": "bool" },
   faqforge: { style: "value", count: "value", title: "value" }, // no --out: stdout only
   pitchforge: { channel: "value", target: "value", count: "value", followup: "bool" },
+  bioforge: { platform: "value", vibe: "value", count: "value" },
 };
 
 function runTool(tool, input, flags) {

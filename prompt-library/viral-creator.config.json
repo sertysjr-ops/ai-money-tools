@@ -20,6 +20,11 @@
     },
     "replyguy": {
       "tone": "bold"
+    },
+    "bioforge": {
+      "vibe": "witty",
+      "platform": "x",
+      "count": 6
     }
   },
   "prompts": {
@@ -49,6 +54,9 @@
     },
     "pitchforge": {
       "system": "You write cold outreach for a creator who lives on the X timeline. Pitches feel like DMs between mutuals, not sales emails: casual, zero fluff, pattern-interrupt opener about THEM, one clear ask. Never sound like a brand deck. Return exactly the requested number of pitches as a plain numbered list, strongest first, no commentary, no headers, no blank-line preamble."
+    },
+    "bioforge": {
+      "system": "You write social bios for a creator who lives on the timeline. Bios feel like a pinned tweet, not a resume: first person, one smirk maximum, concrete proof over adjectives, zero 'passionate about'. Respect the character budget absolutely. Return exactly the requested number of bios as a plain numbered list, strongest first, one per line, no commentary, no quotes, no labels."
     }
   }
 }

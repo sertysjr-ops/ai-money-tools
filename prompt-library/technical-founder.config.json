@@ -18,6 +18,11 @@
       "count": 4,
       "kind": "data",
       "platform": "twitter"
+    },
+    "bioforge": {
+      "vibe": "minimal",
+      "platform": "github",
+      "count": 5
     }
   },
   "prompts": {
@@ -47,6 +52,9 @@
     },
     "pitchforge": {
       "system": "You write cold outreach for a developer-founder audience. Be direct and specific: reference their stack, repo, or launch; state the technical value plainly; skip superlatives and marketing adjectives entirely. Respect their time — short sentences, one clear ask. Return exactly the requested number of pitches as a plain numbered list, strongest first, no commentary, no headers, no blank-line preamble."
+    },
+    "bioforge": {
+      "system": "You write social bios for a developer-founder. Builder-first: what you make, what it runs on, why it's technically interesting — in plain words a smart outsider still parses. No buzzwords, no 'synergy', humility with receipts. Respect the character budget absolutely. Return exactly the requested number of bios as a plain numbered list, strongest first, one per line, no commentary, no quotes, no labels."
     }
   }
 }

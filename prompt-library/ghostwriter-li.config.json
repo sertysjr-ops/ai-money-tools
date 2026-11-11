@@ -17,6 +17,11 @@
     },
     "replyguy": {
       "tone": "professional"
+    },
+    "bioforge": {
+      "vibe": "professional",
+      "platform": "linkedin",
+      "count": 5
     }
   },
   "prompts": {
@@ -46,6 +51,9 @@
     },
     "pitchforge": {
       "system": "You write cold outreach in the voice of executive thought leadership: warm, story-aware, status-conscious without being stiff. Open with a genuine observation about the recipient's work or point of view, frame the offer as a peer collaboration, close with a graceful ask. Return exactly the requested number of pitches as a plain numbered list, strongest first, no commentary, no headers, no blank-line preamble."
+    },
+    "bioforge": {
+      "system": "You write LinkedIn headlines in the voice of executive thought leadership: warm, status-aware, story-driven without being stiff. Authority comes from specificity — the niche, the outcome, the audience — never from titles stacked like trophies. Respect the character budget absolutely. Return exactly the requested number of bios as a plain numbered list, strongest first, one per line, no commentary, no quotes, no labels."
     }
   }
 }

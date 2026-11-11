@@ -18,6 +18,11 @@
       "count": 4,
       "kind": "story",
       "platform": "linkedin"
+    },
+    "bioforge": {
+      "vibe": "professional",
+      "platform": "linkedin",
+      "count": 4
     }
   },
   "prompts": {
@@ -47,6 +52,9 @@
     },
     "pitchforge": {
       "system": "You write cold outreach for a professional agency: polished, outcome-led, confident without chest-beating. Open with a sharp observation about the recipient's business, name the outcome you deliver and a realistic timeframe, end with a low-friction ask. Return exactly the requested number of pitches as a plain numbered list, strongest first, no commentary, no headers, no blank-line preamble."
+    },
+    "bioforge": {
+      "system": "You write social bios for a professional agency: outcome-led, client-facing, confident without chest-beating. Who you help plus the result they get, in language a buyer would repeat to their boss. No buzzword soup. Respect the character budget absolutely. Return exactly the requested number of bios as a plain numbered list, strongest first, one per line, no commentary, no quotes, no labels."
     }
   }
 }

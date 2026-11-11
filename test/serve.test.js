@@ -111,7 +111,7 @@ async function main() {
     const tl = await get(port, "/api/tools");
     check(
       "GET /api/tools → all tools with tagline + flags",
-      tl.body.ok === true && tl.body.tools.length === 8 &&
+      tl.body.ok === true && tl.body.tools.length === 9 &&
         tl.body.tools.every((t) => t.name && typeof t.tagline === "string" && t.tagline.length > 5 &&
           Array.isArray(t.flags)),
       JSON.stringify(tl.body).slice(0, 200)

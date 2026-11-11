@@ -19,6 +19,7 @@ _dani-tools() {
     'faqforge:docs → FAQ page'
     'altmaker:A/B viral angle generator'
     'pitchforge:cold outreach pitch writer'
+    'bioforge:platform-native social bio generator'
   )
 
   _arguments -C \
@@ -61,6 +62,10 @@ _dani-tools() {
           _arguments '--count[pitch count]:count:' \
                      '--channel[channel]:channel:(dm email)' \
                      '--target[target]:target:' '--followup[add follow-up nudges]' ;;
+        bioforge)
+          _arguments '--count[bio count]:count:' \
+                     '--platform[platform]:platform:(x linkedin instagram github)' \
+                     '--vibe[vibe]:vibe:(professional witty bold minimal)' ;;
       esac
       ;;
   esac

@@ -99,6 +99,17 @@ node tools/pitchforge/cli.js offer.txt --target "SaaS founders" --channel email
 cat services.md | node tools/pitchforge/cli.js --count 5 --followup
 ```
 
+### 🪪 bioforge
+
+Platform-native social bios with real character budgets — every option
+annotated with its actual length so you can see what fits before pasting.
+
+```bash
+node tools/bioforge/cli.js "indie hacker building offline AI tools"
+node tools/bioforge/cli.js about.txt --platform linkedin --vibe professional
+cat resume.md | node tools/bioforge/cli.js --count 8 --vibe minimal
+```
+
 ## Local HTTP API (`serve.js`)
 
 Wraps every text-in/text-out tool as a tiny JSON API — same CLIs under the
@@ -192,8 +203,8 @@ threadsmith --print-config
 
 ### Prompt library (5 persona packs)
 
-`prompt-library/` ships ready-made configs that re-voice **all 9 tools**
-with one coherent persona — 40 hand-written prompts, parser-safe:
+`prompt-library/` ships ready-made configs that re-voice **all 10 tools**
+with one coherent persona — 50 hand-written prompts, parser-safe:
 
 | Pack | Voice |
 |---|---|
@@ -265,7 +276,7 @@ node test/pack.test.js        # …or just the shippable artifact
 npm run pack    # → dist/dani-tools-<version>.zip
 ```
 
-Stages exactly what a customer needs (9 CLIs, dispatcher, libs, automation
+Stages exactly what a customer needs (10 CLIs, dispatcher, libs, automation
 server, 5 persona packs, config example, completions, LICENSE, INSTALL.md,
 LISTING.md) and zips it. `marketing/LISTING.md` is the paste-ready Gumroad product page.
 `test/pack.test.js` verifies every bin target ships and no source-only
@@ -291,5 +302,6 @@ flags, empty model output.
 - [x] `faqforge` — turn docs/support text into an FAQ page
 - [x] `altmaker` — A/B viral angles: same idea, N framings with why-it-works
 - [x] `pitchforge` — cold outreach pitches (DM/email) that lead with them, not you
+- [x] `bioforge` — platform-native social bios with real character budgets
 - [x] Chrome extension wrapper for threadsmith (select text → thread)
 - [x] `serve.js` — local HTTP API wrapping the tools (n8n/Make/webhook-ready)
